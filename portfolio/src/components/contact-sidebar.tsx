@@ -1,13 +1,14 @@
-import { Mail, MapPin } from 'lucide-react'
+import { Link } from 'react-router-dom';
+import { Mail, MapPin, Github, Linkedin } from 'lucide-react'
 import Avatar from '../assets/avatar.jpg'
 
 import './card.css'
 import './contact-sidebar.css'
 
-function ContactItem(props : { icon: ReactElement, title: string, value: string }) {
+function ContactItem(props : { Icon: ComponentType<{}>, title: string, value: string }) {
   return (
     <div className="contact-item">
-      <props.icon className="contact-item-icon" size={25} />
+      <props.Icon className="contact-item-icon" size={25} />
       <div className="contact-item-content">
         <p className="contact-item-title">{ props.title }</p>
         <p className="contact-item-value">{ props.value }</p>
@@ -16,12 +17,24 @@ function ContactItem(props : { icon: ReactElement, title: string, value: string 
   )
 }
 
+function SocialIcon(props : { Icon: ComponentType<{}>, link: string }) {
+  return (
+    <a className="social-icon-link" href={props.link} rel="noopener noreferrer">
+      <props.Icon className="social-icon" size={20} /> 
+    </a>
+  ) 
+}
+
 function ContactDetails(props : { email: string; region: string; githubLink: string; linkedInLink: string }) {
   return (
     <>
       <div className="contact-details">
-        <ContactItem icon={Mail} title="CORREO" value={props.email} />
-        <ContactItem icon={MapPin} title="UBICACIÓN" value={props.region} />
+        <ContactItem Icon={Mail} title="CORREO" value={props.email} />
+        <ContactItem Icon={MapPin} title="UBICACIÓN" value={props.region} />
+      </div>
+      <div className="socials-container">
+        <SocialIcon Icon={Github} link={props.githubLink} />
+        <SocialIcon Icon={Linkedin} link={props.linkedInLink} />
       </div>
     </>
   )
@@ -40,6 +53,8 @@ function ContactSidebar(props : { name: string; career: string, email: string, r
       <ContactDetails 
         email={props.email}
         region={props.region}
+        githubLink={props.githubLink}
+        linkedInLink={props.linkedInLink}
       />
     </sidebar>
   )

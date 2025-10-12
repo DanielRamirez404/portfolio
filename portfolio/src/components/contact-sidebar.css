@@ -64,3 +64,20 @@
   font-size: 12px;
   margin: 0px;
 }
+
+.socials-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content:space-around;
+}
+
+.social-icon-link {
+  color: var(--font-color);
+  transition: 0.25s color;
+}
+
+.social-icon-link:hover {
+  color: var(--cyan-hover-color);
+}
