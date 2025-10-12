@@ -1,11 +1,12 @@
-import { Link } from 'react-router-dom';
+import type { LucideIcon } from 'lucide-react'
+
 import { Mail, MapPin, Github, Linkedin } from 'lucide-react'
 import Avatar from '../assets/avatar.jpg'
 
 import './card.css'
 import './contact-sidebar.css'
 
-function ContactItem(props : { Icon: ComponentType<{}>, title: string, value: string }) {
+function ContactItem(props : { Icon: LucideIcon, title: string, value: string }) {
   return (
     <div className="contact-item">
       <props.Icon className="contact-item-icon" size={25} />
@@ -17,7 +18,7 @@ function ContactItem(props : { Icon: ComponentType<{}>, title: string, value: st
   )
 }
 
-function SocialIcon(props : { Icon: ComponentType<{}>, link: string }) {
+function SocialIcon(props : { Icon: LucideIcon, link: string }) {
   return (
     <a className="social-icon-link" href={props.link} rel="noopener noreferrer">
       <props.Icon className="social-icon" size={20} /> 
@@ -42,7 +43,7 @@ function ContactDetails(props : { email: string; region: string; githubLink: str
 
 function ContactSidebar(props : { name: string; career: string, email: string, region: string, githubLink: string, linkedInLink: string}) {
   return (
-    <sidebar className="sidebar card slide-down">
+    <div className="sidebar card slide-down">
       <img className="avatar slide-down" src={Avatar} alt="avatar" />
       <h1 className="sidebar-name">
         {props.name}
@@ -56,7 +57,7 @@ function ContactSidebar(props : { name: string; career: string, email: string, r
         githubLink={props.githubLink}
         linkedInLink={props.linkedInLink}
       />
-    </sidebar>
+    </div>
   )
 }
 
