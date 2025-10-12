@@ -42,8 +42,8 @@ function ContactDetails(props : { email: string; region: string; githubLink: str
 
 function ContactSidebar(props : { name: string; career: string, email: string, region: string, githubLink: string, linkedInLink: string}) {
   return (
-    <sidebar className="sidebar card">
-      <img className="avatar" src={Avatar} alt="avatar" />
+    <sidebar className="sidebar card slide-down">
+      <img className="avatar slide-down" src={Avatar} alt="avatar" />
       <h1 className="sidebar-name">
         {props.name}
       </h1>

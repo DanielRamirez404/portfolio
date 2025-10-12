@@ -1,3 +1,18 @@
+@keyframes slide-down-animation {
+  from {
+    transform: translateY(-25%);
+    opacity: 0;
+  }
+  to {
+    translate: translateY(0);
+    opacity: 1;
+  }
+}
+
+.slide-down {
+  animation: slide-down-animation 1s ease-out;
+}
+
 .sidebar {
   display: flex;
   flex-direction: column;
@@ -5,6 +20,7 @@
   padding: 40px;
   gap: 20px;
 }
+
 
 .avatar {
   width: 175px; 
@@ -63,6 +79,14 @@
 .contact-item-value {
   font-size: 12px;
   margin: 0px;
+}
+
+.contact-item-icon {
+  transition: color 0.25s; 
+}
+
+.contact-item-icon:hover {
+  color: var(--cyan-hover-color);
 }
 
 .socials-container {
