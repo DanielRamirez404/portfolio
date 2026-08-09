@@ -1,0 +1,19 @@
+.btn-swipe::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  height: 100%;
+  width: 75%;
+  border-radius: 2px;
+  padding: 18px 0 11px;
+  background: radial-gradient(var(--color-bright-snow-100), var(--color-bright-snow-50)) ;
+  opacity: 0.3;
+  z-index: 0;
+  transition: left 0.5s cubic-bezier(0.86, 0, 0.07, 1) 0.2s;
+}
+
+.btn-swipe:hover::after {
+  left: calc(100%);
+  transition: left 0.5s cubic-bezier(0.86, 0, 0.07, 1);
+}

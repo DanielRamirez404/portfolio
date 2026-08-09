@@ -1,8 +1,11 @@
 import { cn, generateUUID, splitIntoN } from "#lib/utils";
-import { color, motion } from "motion/react"
+import { motion, type KeyframeOptions } from "motion/react"
 import { Particles } from "./ui/particles";
+import { TranslucidButton } from "./reusables/buttons";
 
-type headerProps = React.ComponentProps<typeof motion.h1>;
+import { Send } from 'lucide-react';
+
+type headerProps = React.ComponentPropsWithoutRef<typeof motion.h1>;
 
 type JobTitleWordProps = Omit<headerProps, 'children' | 'className'> & {
   animationType: 'simple' | 'complex';
@@ -14,7 +17,7 @@ function JobTitleWord({ children, className, animationType, ...props }: JobTitle
   if (animationType === 'simple') {
     return (
       <motion.h1
-        className={cn(className, "z-20 text-xl/20 sm:text-8xl/20 font-bold")}
+        className={cn(className, "z-20 text-xl sm:text-8xl/20 font-bold text-center align-middle")}
         initial={{ x: "-15%", opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         {...props}
@@ -27,6 +30,12 @@ function JobTitleWord({ children, className, animationType, ...props }: JobTitle
   const numberOfChunks = Math.min(4, children.length);
   const chunks = splitIntoN(children, numberOfChunks);
 
+  const timeframesSettings: KeyframeOptions = {
+    duration: 2,
+    ease: "easeInOut",
+    times: [0, 0.5, 0.6, 1],
+  };
+
   return (
     <div className="flex flex-row">
       {chunks.map((chunk, i) => (
@@ -35,30 +44,18 @@ function JobTitleWord({ children, className, animationType, ...props }: JobTitle
           animationType="simple"
           initial={{ clipPath: "inset(0 0 100% 0)" }}
           animate={{
-            y: ["100%", i % 2 === 0 ? "-100%" : "200%" , null, "0%"],
+            y: ["100%", i % 2 === 0 ? "-100%" : "200%", null, "0%"],
             x: [i % 2 === 0 ? "-100%" : "200%", "0%", null, "0%"],
             clipPath: "inset(0 0 0 0)",
             scale: [1.5, null, null, 1]
           }}
           transition={{
             delay: 0.5,
-            y: {
-              duration: 2,
-              ease: "easeInOut",
-              times: [0, 0.5, 0.6, 1], 
-            },
-            x: {
-              duration: 2,
-              ease: "easeInOut",
-              times: [0, 0.5, 0.6, 1], 
-            },
-            scale: {
-              duration: 2,
-              ease: "easeInOut",
-              times: [0, 0.5, 0.6, 1], 
-            },
+            y: timeframesSettings,
+            x: timeframesSettings,
+            scale: timeframesSettings,
             clipPath: {
-              duration: 1, 
+              duration: 1,
               ease: "easeInOut",
             },
           }}
@@ -72,6 +69,8 @@ function JobTitleWord({ children, className, animationType, ...props }: JobTitle
 }
 
 export function Hero() {
+
+
   return (
     <div className="relative flex flex-col w-full min-h-screen items-center justify-center">
 
@@ -87,15 +86,23 @@ export function Hero() {
         Software
       </JobTitleWord>
 
-      <JobTitleWord
-        animationType="simple"
-        transition={{
-          duration: 0.5,
-          delay: 2,
-        }}
-      >
-        Engineer
-      </JobTitleWord>
+      <div className="flex flex-row justify-center items-center gap-5">
+        <JobTitleWord
+          animationType="simple"
+          transition={{
+            duration: 0.5,
+            delay: 2,
+          }}
+        >
+          Engineer
+        </JobTitleWord>
+
+        <TranslucidButton className="translate-y-3 flex flex-row items-center justify-center gap-1">
+          <Send size={16} className="shrink-0" />
+          <span className="leading-none mb-[0.2rem]">Contact Me!</span>
+        </TranslucidButton>
+      </div>
+
     </div>
-  )
+  );
 }
