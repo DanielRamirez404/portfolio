@@ -49,12 +49,17 @@ export function TranslucidButton({ rotate, className, children, ...props }: Tran
 
 type TranslucidIconButtonProps = Omit<TranslucidButtonProps, 'rotate'> & {
   icon: IconProp;
+  href: string;
+  target?: string;
+  rel?: string;
 };
 
-export function TranslucidIconButton({ icon, ...props }: TranslucidIconButtonProps) {
+export function TranslucidIconLink({ icon, href, target, rel, ...props }: TranslucidIconButtonProps) {
   return (
-    <TranslucidButton rotate {...props} >
-      <FontAwesomeIcon icon={icon} className="h-6! w-6!" />
-    </TranslucidButton>
+    <a href={href} target={target} rel={rel}>
+      <TranslucidButton rotate {...props} >
+        <FontAwesomeIcon icon={icon} className="h-6! w-6!" />
+      </TranslucidButton>
+    </a>
   );
 }

@@ -1,10 +1,9 @@
 import { cn, generateUUID, splitIntoN } from "#lib/utils";
 import { motion, type KeyframeOptions } from "motion/react"
 import { Particles } from "./ui/particles";
-import { TranslucidButton, TranslucidIconButton } from "./reusables/buttons";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { TranslucidButton, TranslucidIconLink, } from "./reusables/buttons";
 import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
-import { faEnvelope, faLink, faM, faPhone } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
 import { Download } from 'lucide-react';
 import { useIsMobile } from "#hooks/use-mobile";
 
@@ -72,7 +71,6 @@ function JobTitleWord({ children, className, animationType, ...props }: JobTitle
 }
 
 export function Hero() {
-
   const isMobile = useIsMobile();
 
   return (
@@ -101,32 +99,25 @@ export function Hero() {
           Engineer
         </JobTitleWord>
 
-        <TranslucidButton className="translate-y-3 flex flex-row items-center justify-center gap-1">
-          <Download size={16} className="shrink-0" />
-          <span className="leading-none mb-[0.1rem]">Download my CV!</span>
-        </TranslucidButton>
+        <a
+          href={`${import.meta.env.BASE_URL}files/CV.pdf`}
+          download="Daniel-Ramírez-CV.pdf"
+          className="inline-block"
+        >
+          <TranslucidButton className="translate-y-3 flex flex-row items-center justify-center gap-1">
+            <Download size={16} className="shrink-0" />
+            <span className="leading-none mb-[0.1rem]">Download my CV!</span>
+          </TranslucidButton>
+        </a>
+
       </div>
 
       <div className="flex flex-row justify-center items-center translate-y-5 gap-5">
-        <a href="https://github.com/DanielRamirez404" target="_blank" rel="noreferrer">
-          <TranslucidIconButton icon={faGithub} />
-        </a>
-
-        <a href="https://www.linkedin.com/in/danielramirezabou/" target="_blank" rel="noreferrer">
-          <TranslucidIconButton icon={faLinkedin} />
-        </a>
-
-        <a href="mailto:danielramirezabou@gmail.com">
-          <TranslucidIconButton icon={faEnvelope} />
-        </a>
-
-        {isMobile && (
-          <a href="tel:+584224047404">
-            <TranslucidIconButton icon={faPhone} />
-          </a>
-        )}
+        <TranslucidIconLink href="https://github.com/DanielRamirez404" target="_blank" rel="noreferrer" icon={faGithub} />
+        <TranslucidIconLink href="https://www.linkedin.com/in/danielramirezabou/" target="_blank" rel="noreferrer" icon={faLinkedin} />
+        <TranslucidIconLink href="mailto:danielramirezabou@gmail.com" icon={faEnvelope} />
+        {isMobile && (<TranslucidIconLink href="tel:+584224047404" icon={faPhone} />)}
       </div>
-
 
     </div>
   );
