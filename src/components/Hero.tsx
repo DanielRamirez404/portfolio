@@ -1,9 +1,12 @@
 import { cn, generateUUID, splitIntoN } from "#lib/utils";
 import { motion, type KeyframeOptions } from "motion/react"
 import { Particles } from "./ui/particles";
-import { TranslucidButton } from "./reusables/buttons";
-
-import { Send } from 'lucide-react';
+import { TranslucidButton, TranslucidIconButton } from "./reusables/buttons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
+import { faEnvelope, faLink, faM, faPhone } from '@fortawesome/free-solid-svg-icons';
+import { Download } from 'lucide-react';
+import { useIsMobile } from "#hooks/use-mobile";
 
 type headerProps = React.ComponentPropsWithoutRef<typeof motion.h1>;
 
@@ -70,6 +73,7 @@ function JobTitleWord({ children, className, animationType, ...props }: JobTitle
 
 export function Hero() {
 
+  const isMobile = useIsMobile();
 
   return (
     <div className="relative flex flex-col w-full min-h-screen items-center justify-center">
@@ -98,10 +102,31 @@ export function Hero() {
         </JobTitleWord>
 
         <TranslucidButton className="translate-y-3 flex flex-row items-center justify-center gap-1">
-          <Send size={16} className="shrink-0" />
-          <span className="leading-none mb-[0.2rem]">Contact Me!</span>
+          <Download size={16} className="shrink-0" />
+          <span className="leading-none mb-[0.1rem]">Download my CV!</span>
         </TranslucidButton>
       </div>
+
+      <div className="flex flex-row justify-center items-center translate-y-5 gap-5">
+        <a href="https://github.com/DanielRamirez404" target="_blank" rel="noreferrer">
+          <TranslucidIconButton icon={faGithub} />
+        </a>
+
+        <a href="https://www.linkedin.com/in/danielramirezabou/" target="_blank" rel="noreferrer">
+          <TranslucidIconButton icon={faLinkedin} />
+        </a>
+
+        <a href="mailto:danielramirezabou@gmail.com">
+          <TranslucidIconButton icon={faEnvelope} />
+        </a>
+
+        {isMobile && (
+          <a href="tel:+584224047404">
+            <TranslucidIconButton icon={faPhone} />
+          </a>
+        )}
+      </div>
+
 
     </div>
   );
