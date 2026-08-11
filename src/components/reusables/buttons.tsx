@@ -7,9 +7,10 @@ import type { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 type TranslucidButtonProps = React.ComponentPropsWithoutRef<typeof motion.button> & {
   rotate?: boolean;
+  shine?: boolean;
 }
 
-export function TranslucidButton({ rotate, className, children, ...props }: TranslucidButtonProps) {
+export function TranslucidButton({ rotate, className, shine = true, children, ...props }: TranslucidButtonProps) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -17,7 +18,8 @@ export function TranslucidButton({ rotate, className, children, ...props }: Tran
       className={
         cn(
           "outline outline-bright-snow-100 px-3 py-2 rounded-4xl text-sm font-semibold",
-          "relative cursor-pointer overflow-hidden btn-swipe",
+          "relative cursor-pointer overflow-hidden",
+          shine && "btn-swipe",
           className
         )
       }
