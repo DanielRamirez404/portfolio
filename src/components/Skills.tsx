@@ -256,19 +256,59 @@ function LanguagesSection() {
 
   const [selected, setSelected] = useState<LanguageName | null>(null);
 
+  const [isExampleOpen, setExampleOpenStatus] = useState<boolean>(false);
+
   type Language = {
     name: LanguageName;
     level: string;
     flag: FlagComponent;
+    description: string;
+    example?: string;
   };
 
   const languages: Language[] = [
-    { name: "Spanish", level: "Native", flag: ES },
-    { name: "English", level: "C1", flag: US },
-    { name: "French", level: "B2", flag: FR },
-    { name: "German", level: "B1", flag: DE },
-    { name: "Portuguese", level: "B1", flag: BR },
-    { name: "Japanese", level: "N5", flag: JP },
+    {
+      name: "Spanish",
+      level: "Native",
+      flag: ES,
+      description: "As my native language, it's helped me a great deal to learn other languages that share several traits!",
+      example: "Lo genial del español es que, pese a haber tantos dialectos, son todos bastante inteligibles entre sí"
+    },
+    {
+      name: "English",
+      level: "C1",
+      flag: US,
+      description: "It's sort of my default language for my studies, online life and even my entertainment, so I'm pretty used to it",
+      example: "English is the most useful language in software development since it's basically ubiquitous"
+    },
+    {
+      name: "French",
+      level: "B2",
+      flag: FR,
+      description: "My favorite one! It's been quite easy for me to pick up. Plus, I love Francophone YouTube and Music",
+      example: "Perso, je trouve le verlan et les expressions d'argot français vachement chouettes !"
+    },
+    {
+      name: "German",
+      level: "B1",
+      flag: DE,
+      description: "It's not as hard as I once thought. I'm far better listening and reading than speaking, but I'm still learning!",
+      example: "Ich möchte mehr deutsche Inhalte konsumieren, um besser zu werden. Ich glaube auch, dass sie einen schönen Klang hat"
+    },
+    {
+      name: "Portuguese",
+      level: "B1",
+      flag: BR,
+      description: "I'm really into how it sounds. As a Spanish speaker, it's fairly easy, but it's still its own different language",
+      example: "Gosto muito da sonoridade dessa língua. Não conheço muitas gírias ainda, mas estou com vontade de aprender!"
+    },
+    {
+      name: "Japanese",
+      level: "N5",
+      flag: JP,
+      description: "I'm kind of rusty, but I love it! I don't practice enough since I'm focused on other languagues at the moment",
+      example: "日本語で話すのは本当に難しいし、聞く時もあまり分からないけど、アニメを見たりマンガを読んだりできるから、なんとかなるはずだよね！"
+    },
   ];
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -296,26 +336,70 @@ function LanguagesSection() {
   }, [selected]);
 
   return (
-    <div ref={containerRef} className="min-h-[50vh] flex items-center">
+    <div ref={containerRef} className="min-h-[50vh] flex items-center mt-7">
       <motion.div
-        className="flex flex-row gap-5"
+        className="flex flex-row gap-5 items-center"
         animate={{ x: offset }}
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
       >
-        {languages.map(({ name, level, flag: Flag }) => (
-          <div key={name} ref={(el) => { itemRefs.current[name] = el; }}>
-            <TranslucidButton
-              shine={false}
-              className="relative overflow-visible"
-              onClick={() => setSelected(name)}
+        {languages.map(({ name, level, flag: Flag, description, example }) => {
+          const isSelected = selected === name;
+
+          return (
+            <div
+              key={name}
+              ref={(el) => { itemRefs.current[name] = el; }}
+              className="h-full"
             >
-              <Flag className="h-full w-full rounded-md overflow-hidden" title={name} />
-              <div className="absolute left-1/2 -translate-x-1/2 translate-y-1/2 font-bold text-charcoal-blue-400 bg-charcoal-blue-950 border border-bright-snow-200 rounded-md p-1.5">
-                {level}
-              </div>
-            </TranslucidButton>
-          </div>
-        ))}
+              <TranslucidButton
+                shine={false}
+                onClick={
+                  () => {
+
+                    if (!isSelected) {
+                      setSelected(name);
+                      setExampleOpenStatus(false);
+                      return;
+                    }
+
+                    setExampleOpenStatus(prev => !prev);
+                  }
+                }
+                className={cn(
+                  "relative overflow-visible min-h-20 min-w-20",
+                  isSelected && "w-50 h-full flex flex-col gap-3"
+                )}
+              >
+                <Flag
+                  title={name}
+                  className={cn(
+                    "h-full w-full rounded-md overflow-hidden",
+                  )}
+                />
+
+                {isSelected
+                  ? isExampleOpen
+                    ? (
+                      <p>{example}</p>
+                    ) : (
+                      <>
+                        <h3 className="text-2xl">{name}</h3>
+                        <p>{description}</p>
+                      </>
+
+                    )
+
+
+                  : (
+                    <div className="absolute left-1/2 -translate-x-1/2 translate-y-full font-bold text-charcoal-blue-400 bg-charcoal-blue-950 border border-bright-snow-200 rounded-md p-1.5">
+                      {level}
+                    </div>
+                  )}
+
+              </TranslucidButton>
+            </div>
+          )
+        })}
       </motion.div>
     </div>
   );
@@ -359,7 +443,12 @@ export function Skills() {
         {section === 'Technologies' ? (
           <TechnologiesSection />
         ) : (
-          <LanguagesSection />
+          <>
+            <p className="translate-y-5 text-center font-semibold opacity-85 hover:opacity-100 transition-opacity duration-300">
+              Click on the cards to read an example!
+            </p>
+            <LanguagesSection />
+          </>
         )}
 
       </div>
