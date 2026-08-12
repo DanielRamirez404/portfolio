@@ -13,6 +13,10 @@
   transition: left 0.5s cubic-bezier(0.86, 0, 0.07, 1) 0.2s;
 }
 
+.btn-swipe.btn-active::after {
+  background: radial-gradient(var(--color-charcoal-blue-400), var(--color-charcoal-blue-600));
+}
+
 .btn-swipe:hover::after {
   left: calc(100%);
   transition: left 0.5s cubic-bezier(0.86, 0, 0.07, 1);

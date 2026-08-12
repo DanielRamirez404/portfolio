@@ -1,7 +1,7 @@
 import { Curtain } from "#components/Curtain";
 import { Hero } from "#components/Hero";
+import { Skills } from "#components/Skills";
 import { useLenis } from "#hooks/useLenis";
-import { motion } from "motion/react"
 
 function App() {
   useLenis()
@@ -10,6 +10,7 @@ function App() {
     <div className="relative min-h-screen w-screen flex flex-col justify-center">
       <Curtain delay={3} />
       <Hero />
+      <Skills />
     </div>
   );
 }

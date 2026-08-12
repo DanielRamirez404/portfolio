@@ -76,7 +76,7 @@ export function Hero() {
   const isMobile = useIsMobile();
 
   return (
-    <div className="h-screen relative flex flex-col w-full min-h-screen items-center justify-center gap-3">
+    <div className="min-h-screen relative flex flex-col w-full items-center justify-center gap-3">
 
       <Particles
         className="absolute inset-0 z-0"
