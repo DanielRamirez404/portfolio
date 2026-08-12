@@ -7,7 +7,7 @@ function App() {
   useLenis()
 
   return (
-    <div className="relative min-h-screen w-screen flex flex-col justify-center">
+    <div className="relative min-h-screen w-screen flex flex-col justify-center overflow-x-hidden">
       <Curtain delay={3} />
       <Hero />
       <Skills />

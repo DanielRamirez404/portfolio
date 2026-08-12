@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { TranslucidButton } from "./reusables/buttons";
 import { Particles } from "./ui/particles";
+import { motion } from "motion/react"
 
 import { ES, US, FR, DE, BR, JP, type FlagComponent } from "country-flag-icons/react/3x2";
 import type { ComponentType, SVGProps } from "react";
@@ -203,7 +204,7 @@ function TechnologiesSection() {
         ))}
       </div>
       <div className="flex flex-col gap-5">
-        <p className="text-center font-semibold opacity-80 hover:opacity-100">
+        <p className="text-center font-semibold opacity-85 hover:opacity-100 transition-opacity duration-300">
           {captions[techType]}
         </p>
         <div className={cn("w-full flex flex-wrap justify-center items-center gap-5")}>
@@ -245,8 +246,18 @@ function TechnologiesSection() {
 
 function LanguagesSection() {
 
+  type LanguageName =
+    | "Spanish"
+    | "English"
+    | "French"
+    | "German"
+    | "Portuguese"
+    | "Japanese";
+
+  const [selected, setSelected] = useState<LanguageName | null>(null);
+
   type Language = {
-    name: string;
+    name: LanguageName;
     level: string;
     flag: FlagComponent;
   };
@@ -260,16 +271,52 @@ function LanguagesSection() {
     { name: "Japanese", level: "N5", flag: JP },
   ];
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  const itemRefs = useRef<Partial<Record<LanguageName, HTMLDivElement | null>>>({});
+  const [offset, setOffset] = useState(0);
+
+  useLayoutEffect(() => {
+    if (!selected) {
+      setSelected('Spanish');
+      return;
+    }
+
+    const container = containerRef.current;
+    const item = itemRefs.current[selected];
+    if (!container || !item) return;
+
+    const containerRect = container.getBoundingClientRect();
+    const itemRect = item.getBoundingClientRect();
+
+    const containerCenter = containerRect.left + containerRect.width / 2;
+    const itemCenter = itemRect.left + itemRect.width / 2;
+    const delta = containerCenter - itemCenter;
+
+    setOffset((prev) => prev + delta);
+  }, [selected]);
+
   return (
-    <div className="">
-      <div>
+    <div ref={containerRef} className="min-h-[50vh] flex items-center">
+      <motion.div
+        className="flex flex-row gap-5"
+        animate={{ x: offset }}
+        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      >
         {languages.map(({ name, level, flag: Flag }) => (
-          <TranslucidButton key={name} shine={false} className="relative overflow-visible">
-            <Flag className="h-15 w-15 rounded-md overflow-hidden" title={name} />
-            <div className="absolute text-sm bg-white">{level}</div>
-          </TranslucidButton>
+          <div key={name} ref={(el) => { itemRefs.current[name] = el; }}>
+            <TranslucidButton
+              shine={false}
+              className="relative overflow-visible"
+              onClick={() => setSelected(name)}
+            >
+              <Flag className="h-full w-full rounded-md overflow-hidden" title={name} />
+              <div className="absolute left-1/2 -translate-x-1/2 translate-y-1/2 font-bold text-charcoal-blue-400 bg-charcoal-blue-950 border border-bright-snow-200 rounded-md p-1.5">
+                {level}
+              </div>
+            </TranslucidButton>
+          </div>
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 }
