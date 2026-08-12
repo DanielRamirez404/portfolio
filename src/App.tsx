@@ -4,7 +4,7 @@ import { Skills } from "#components/Skills";
 import { useLenis } from "#hooks/useLenis";
 
 function App() {
-  useLenis()
+  useLenis(4000)
 
   return (
     <div className="relative min-h-screen w-screen flex flex-col justify-center overflow-x-hidden">
