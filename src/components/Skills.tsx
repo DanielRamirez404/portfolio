@@ -4,7 +4,6 @@ import { Particles } from "./ui/particles";
 import { motion } from "motion/react"
 
 import { ES, US, FR, DE, BR, JP, type FlagComponent } from "country-flag-icons/react/3x2";
-import type { ComponentType, SVGProps } from "react";
 
 import androidStudioIcon from '#assets/android-studio.webp';
 import bashIcon from '#assets/bash.webp';
