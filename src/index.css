@@ -139,6 +139,12 @@
 
   --tracking-normal: 0em;
   --spacing: 0.25rem;
+  --animate-gradient: gradient 8s linear infinite;
+  @keyframes gradient {
+  to {
+    background-position: var(--bg-size, 300%) 0;
+    }
+  }
 }
 
 .dark {

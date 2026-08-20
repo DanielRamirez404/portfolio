@@ -78,14 +78,6 @@ export function Hero() {
   return (
     <div className="min-h-screen relative flex flex-col w-full items-center justify-center gap-3">
 
-      <Particles
-        className="absolute inset-0 z-0"
-        quantity={100}
-        ease={80}
-        color="#ece8df"
-        refresh
-      />
-
       <div className="flex flex-row gap-3 items-center justify-center">
         <TranslucidButton rotate className="p-0 rounded-full">
           <img

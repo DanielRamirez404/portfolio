@@ -415,13 +415,6 @@ export function Skills() {
 
   return (
     <div className="min-h-screen relative flex flex-col w-full items-center pt-[10vh]">
-      <Particles
-        className="absolute inset-0 z-0"
-        quantity={100}
-        ease={80}
-        color="#ece8df"
-        refresh
-      />
 
       <div className="w-[90%] flex flex-col items-center justify-center max-w-200 gap-3 px-5">
         <div className="flex flex-row w-full">
