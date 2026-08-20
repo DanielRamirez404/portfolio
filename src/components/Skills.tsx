@@ -18,8 +18,7 @@ import figmaIcon from '#assets/figma.webp';
 import gitIcon from '#assets/git.webp';
 import githubActionsIcon from '#assets/github-actions.png';
 import githubIcon from '#assets/github.svg';
-import htmlIcon from '#assets/html.webp';
-import jetpackComposeIcon from '#assets/jetpack-compose.png';
+import htmlIcon from '#assets/html.webp'; import jetpackComposeIcon from '#assets/jetpack-compose.png';
 import jiraIcon from '#assets/jira.png';
 import jsIcon from '#assets/js.webp';
 import kotlinIcon from '#assets/kotlin.png';
@@ -414,7 +413,7 @@ export function Skills() {
   ];
 
   return (
-    <div className="min-h-screen relative flex flex-col w-full items-center pt-[10vh]">
+    <div className="min-h-screen py-[5vh] relative flex flex-col w-full items-center pt-[10vh]">
 
       <div className="w-[90%] flex flex-col items-center justify-center max-w-200 gap-3 px-5">
         <div className="flex flex-row w-full">

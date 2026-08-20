@@ -6,9 +6,30 @@ import woollyBreakoutImg from '#assets/woolly-breakout.png';
 import chessImg from '#assets/chess.png';
 import libraryImg from '#assets/library.png';
 
+import apoloVideo from '#assets/apolo-ugma.mp4';
+import asiaBarVideo from '#assets/asia-bar.mp4';
+import woollyBreakoutVideo from '#assets/woolly-breakout.mp4';
+import chessVideo from '#assets/chess.mp4';
+import libraryVideo from '#assets/library.mp4';
+
 import { cn } from "#lib/utils";
 import { Badge } from "./ui/badge";
 import { AnimatedGradientText } from "./ui/animated-gradient-text";
+
+import '@vidstack/react/player/styles/default/theme.css';
+import '@vidstack/react/player/styles/default/layouts/video.css';
+import { MediaPlayer, MediaProvider } from '@vidstack/react';
+import { defaultLayoutIcons, DefaultVideoLayout } from '@vidstack/react/player/layouts/default';
+import { useRef, useState } from "react";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "#components/ui/dialog"
+import { useIsMobile } from "#hooks/use-mobile";
 
 export function Projects() {
 
@@ -18,9 +39,16 @@ export function Projects() {
     type: 'Project' | 'Freelance' | 'University';
     priority: 'high' | 'low';
     img: string;
+    video: string;
     github?: string;
     stack: string[];
   };
+
+  const [isVideoPlayerOpen, setVideoPlayerOpenStatus] = useState<boolean>(false);
+
+  const isMobile = useIsMobile();
+
+  const [areAllProjectsShown, setAllProjectsAsShown] = useState<boolean>(false);
 
   const projects: Project[] = [
 
@@ -28,18 +56,10 @@ export function Projects() {
       name: 'Apolo UGMA',
       type: 'Freelance',
       priority: 'high',
-      description: "UX-focused automatic student enrollment projection & friendly academic scheduling web app for the UGMA university",
+      description: "UX-focused automatic student enrollment projection & academic scheduling web app for the UGMA university where I built the entire frontend",
       img: apoloImg,
+      video: apoloVideo,
       stack: ["Next.js", "TypeScript", "Tailwind", "Tanstack Query", "Zod", "Shadcn"],
-    },
-
-    {
-      name: 'Asia Bar Restaurant Web',
-      type: 'Freelance',
-      priority: 'high',
-      description: "Sales management & ticket generation system for a local Asian restaurant",
-      img: asiaBarImg,
-      stack: ["Node.js", "Express.js", "JWT", "MariaDB", "React", "JavaScript", "CSS"],
     },
 
     {
@@ -48,7 +68,18 @@ export function Projects() {
       priority: 'high',
       description: "2D real-time local multiplayer cross-platform game built with client-server architecture and TCP sockets",
       img: woollyBreakoutImg,
+      video: woollyBreakoutVideo,
       stack: ["C++20", "SDL2", "Boost.Asio", "CMake"],
+    },
+
+    {
+      name: 'Asia Bar Restaurant Web',
+      type: 'Freelance',
+      priority: 'high',
+      description: "Led and built most of a POS & kitchen ticket generation system for a local restaurant",
+      img: asiaBarImg,
+      video: asiaBarVideo,
+      stack: ["Node.js", "Express.js", "JWT", "MariaDB", "React", "JavaScript", "CSS"],
     },
 
     {
@@ -57,6 +88,7 @@ export function Projects() {
       priority: 'low',
       description: "Cross-platform chess clone integrating a custom bot made with a minmax backtracking AI algorithm",
       img: chessImg,
+      video: chessVideo,
       stack: ["C++20", "SDL2", "CMake"],
     },
 
@@ -66,113 +98,157 @@ export function Projects() {
       priority: 'low',
       description: "Circulation loans management system built for the Julián Temístocles Maza public library",
       img: libraryImg,
+      video: libraryVideo,
       stack: ["React", "JavaScript", "Tailwind"],
     },
   ];
 
+  const selectedProject = useRef<Project>(projects[0]);
+
+  const shownProjects = isMobile && !areAllProjectsShown ? projects.filter(p => p.priority === 'high') : projects;
+
   return (
-    <div className="min-h-screen relative flex flex-col w-full items-center gap-3 pt-[10vh]">
+    <div className="min-h-screen py-[5vh] relative flex flex-col w-full items-center gap-3">
+
+      <Dialog open={isVideoPlayerOpen} onOpenChange={setVideoPlayerOpenStatus}>
+        <DialogContent className="sm:max-w-3xl">
+          <DialogHeader>
+            <DialogTitle>{selectedProject.current.name}</DialogTitle>
+          </DialogHeader>
+          <MediaPlayer title={selectedProject.current.name} src={selectedProject.current.video}>
+            <MediaProvider />
+            <DefaultVideoLayout
+              thumbnails={selectedProject.current.img}
+              icons={defaultLayoutIcons}
+            />
+          </MediaPlayer>
+        </DialogContent>
+      </Dialog>
+
       <div className="w-[95%] lg:w-[70%] flex flex-col items-center justify-center max-w-200 gap-8 px-5">
+
         <h3 className="text-3xl font-semibold self-start">
           Projects
         </h3>
 
-        <div className="w-full flex flex-row flex-wrap gap-10 items-center justify-center">
-          {projects.map(({ name, img, type, priority, description, stack }) => (
-            <TranslucidButton
-              key={name}
-              className={cn(
-                "relative w-full md:w-75 flex flex-col gap-5 items-start"
-              )}
-              shine={false}
-            >
+        <p className="text-center font-semibold opacity-85 hover:opacity-100 transition-opacity duration-300">
+          Click on the cards to watch a short demo!
+        </p>
 
-              <div className="w-full flex flex-col items-center gap-1">
+        <div className="w-full flex flex-row flex-wrap gap-10 items-strech justify-center">
+          {shownProjects.map(project => {
+            const { name, img, type, priority, description, stack } = project;
 
-                <div className="flex w-full flex-row justify-center bg-charcoal-blue-900 overflow-hidden rounded-2xl">
-                  <img
-                    className="h-50 w-auto"
-                    src={img}
-                    fetchPriority={priority}
-                  />
+            return (
+              <TranslucidButton
+                key={name}
+                className={cn(
+                  "relative w-full md:w-75 flex flex-col gap-5 items-start"
+                )}
+                shine={false}
+                onClick={() => {
+                  selectedProject.current = project;
+                  setVideoPlayerOpenStatus(true);
+                }}
+              >
+
+                <div className="w-full flex flex-col items-center gap-1">
+
+                  <div className="flex w-full flex-row justify-center bg-charcoal-blue-900 overflow-hidden rounded-2xl">
+                    <img
+                      className="h-50 w-auto"
+                      src={img}
+                      fetchPriority={priority}
+                    />
+                  </div>
+
+
+                  <div className="w-full flex flex-row items-center justify-between">
+                    <h4 className="text-lg truncate">
+                      {name}
+                    </h4>
+
+                    {
+                      type === "Freelance" ? (
+                        <div className="group relative rounded-full px-2 shadow-[inset_0_-8px_10px_#8fdfff1f] transition-shadow duration-500 ease-out hover:shadow-[inset_0_-5px_10px_#8fdfff3f]">
+                          <span
+                            className={cn(
+                              "animate-gradient absolute inset-0 block h-full w-full rounded-[inherit]",
+                              "bg-linear-to-r from-[#ffaa40]/50 via-[#9c40ff]/50 to-[#ffaa40]/50 bg-size-[300%_100%] p-px"
+                            )}
+                            style={{
+                              WebkitMask:
+                                "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                              WebkitMaskComposite: "destination-out",
+                              mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                              maskComposite: "subtract",
+                              WebkitClipPath: "padding-box",
+                            }}
+                          />
+                          <AnimatedGradientText className="text-xs">
+                            Freelance
+                          </AnimatedGradientText>
+                        </div>
+                      ) : (
+                        <div className="group relative rounded-full px-2 shadow-[inset_0_-8px_10px_#8fdfff1f] transition-shadow duration-500 ease-out hover:shadow-[inset_0_-5px_10px_#8fdfff3f]">
+                          <span
+                            className={cn(
+                              "animate-gradient absolute inset-0 block h-full w-full rounded-[inherit]",
+                              "bg-linear-to-r from-[#22d3ee]/50 via-[#2dd4bf]/50 to-[#22d3ee]/50 bg-size[300%_100%] p-px"
+                            )}
+                            style={{
+                              WebkitMask:
+                                "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                              WebkitMaskComposite: "destination-out",
+                              mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                              maskComposite: "subtract",
+                              WebkitClipPath: "padding-box",
+                            }}
+                          />
+                          <span className="text-xs text-bright-snow-200">
+                            {type}
+                          </span>
+                        </div>
+                      )
+                    }
+                  </div>
+
+                  <p className="w-full text-start font-normal text-xs">
+                    {description}
+                  </p>
+
                 </div>
 
-
-                <div className="w-full flex flex-row items-center justify-between">
-                  <h4 className="text-lg truncate">
-                    {name}
-                  </h4>
-
-                  {
-                    type === "Freelance" ? (
-                      <div className="group relative rounded-full px-2 shadow-[inset_0_-8px_10px_#8fdfff1f] transition-shadow duration-500 ease-out hover:shadow-[inset_0_-5px_10px_#8fdfff3f]">
-                        <span
-                          className={cn(
-                            "animate-gradient absolute inset-0 block h-full w-full rounded-[inherit]",
-                            "bg-linear-to-r from-[#ffaa40]/50 via-[#9c40ff]/50 to-[#ffaa40]/50 bg-size[300%_100%] p-px"
-                          )}
-                          style={{
-                            WebkitMask:
-                              "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                            WebkitMaskComposite: "destination-out",
-                            mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                            maskComposite: "subtract",
-                            WebkitClipPath: "padding-box",
-                          }}
-                        />
-                        <AnimatedGradientText className="text-xs">
-                          Freelance
-                        </AnimatedGradientText>
-                      </div>
-                    ) : (
-                      <div className="group relative rounded-full px-2 shadow-[inset_0_-8px_10px_#8fdfff1f] transition-shadow duration-500 ease-out hover:shadow-[inset_0_-5px_10px_#8fdfff3f]">
-                        <span
-                          className={cn(
-                            "animate-gradient absolute inset-0 block h-full w-full rounded-[inherit]",
-                            "bg-linear-to-r from-[#22d3ee]/50 via-[#2dd4bf]/50 to-[#22d3ee]/50 bg-size[300%_100%] p-px"
-                          )}
-                          style={{
-                            WebkitMask:
-                              "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                            WebkitMaskComposite: "destination-out",
-                            mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                            maskComposite: "subtract",
-                            WebkitClipPath: "padding-box",
-                          }}
-                        />
-                        <span className="text-xs text-bright-snow-200">
-                          {type}
-                        </span>
-                      </div>
-                    )
-                  }
+                <div className="flex flex-row flex-wrap gap-x-2">
+                  {stack.map(technology => (
+                    <Badge
+                      key={name + technology}
+                      variant="outline"
+                      className="text-xs bg-transparent border-bright-snow-100 my-1"
+                    >
+                      {technology}
+                    </Badge>
+                  ))}
                 </div>
 
+              </TranslucidButton>
 
-                <p className="text-start font-normal text-xs">
-                  {description}
-                </p>
+            );
+          })}
 
-
-              </div>
-
-              <div className="flex flex-row flex-wrap gap-x-2">
-                {stack.map(technology => (
-                  <Badge
-                    key={name + technology}
-                    variant="outline"
-                    className="text-xs bg-transparent border-bright-snow-100 my-1"
-                  >
-                    {technology}
-                  </Badge>
-                ))}
-              </div>
-
-
-            </TranslucidButton>
-          ))}
         </div>
+
+        {isMobile && (
+          <p 
+            className="self-end text-end cursor-pointer font-semibold opacity-85 hover:opacity-100 transition-opacity duration-300"
+            onClick={() => setAllProjectsAsShown(prev => !prev)}
+          >
+            { areAllProjectsShown ? "Show less" : "Show more..." }
+          </p>
+        )}
+
       </div>
+
 
     </div>
   );

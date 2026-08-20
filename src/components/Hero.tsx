@@ -76,7 +76,7 @@ export function Hero() {
   const isMobile = useIsMobile();
 
   return (
-    <div className="min-h-screen relative flex flex-col w-full items-center justify-center gap-3">
+    <div className="min-h-screen py-[5vh] relative flex flex-col w-full items-center justify-center gap-3">
 
       <div className="flex flex-row gap-3 items-center justify-center">
         <TranslucidButton rotate className="p-0 rounded-full">
