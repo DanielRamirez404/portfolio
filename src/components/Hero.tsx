@@ -21,7 +21,7 @@ function JobTitleWord({ children, className, animationType, ...props }: JobTitle
   if (animationType === 'simple') {
     return (
       <motion.h1
-        className={cn(className, "z-20 text-xl sm:text-8xl/20 font-bold text-center align-middle")}
+        className={cn(className, "z-20 text-4xl/8 sm:text-7xl/10 md:text-8xl/20 font-bold text-center align-middle")}
         initial={{ x: "-15%", opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         {...props}
@@ -90,7 +90,7 @@ export function Hero() {
           />
         </TranslucidButton>
         <div className="flex flex-col">
-          <h2 className="font-bold text-2xl leading-none">Daniel Ramírez</h2>
+          <h2 className="font-bold text-xl sm:text-2xl leading-none">Daniel Ramírez</h2>
           <div className="flex flex-row items-center gap-1.5">
             <VE className="h-10 w-10 rounded-md overflow-hidden" />
             <div className="text-xs leading-none">
@@ -106,7 +106,7 @@ export function Hero() {
           SOFTWARE
         </JobTitleWord>
 
-        <div className="flex flex-row justify-center items-center gap-3">
+        <div className="flex flex-row justify-center items-center gap-1.5 sm:gap-3">
           <JobTitleWord
             animationType="simple"
             transition={{
@@ -122,9 +122,9 @@ export function Hero() {
             download="Daniel-Ramírez-CV.pdf"
             className="inline-block"
           >
-            <TranslucidButton className="flex flex-row items-center justify-center gap-1">
-              <Download size={16} className="shrink-0" />
-              <span className="leading-none mb-[0.1rem]">Download my CV!</span>
+            <TranslucidButton className="flex flex-row items-center justify-center gap-1 px-2 py-1 sm:px-3 sm:py-2">
+              <Download size={isMobile ? 14 : 16} className="shrink-0" />
+              <span className="leading-none sm:mb-[0.1rem] text-xs sm:text-base">{isMobile ? "Get" : "Download"} my CV!</span>
             </TranslucidButton>
           </a>
 

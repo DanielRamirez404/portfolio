@@ -83,7 +83,7 @@ export function TranslucidIconLink({ icon, href, target, rel, ...props }: Transl
   return (
     <a href={href} target={target} rel={rel}>
       <TranslucidButton rotate {...props} >
-        <FontAwesomeIcon icon={icon} className="h-6! w-6!" />
+        <FontAwesomeIcon icon={icon} className="h-5! w-5! sm:h-6! sm:w-6!" />
       </TranslucidButton>
     </a>
   );

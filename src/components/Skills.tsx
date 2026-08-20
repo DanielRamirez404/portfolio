@@ -202,7 +202,7 @@ function TechnologiesSection() {
         ))}
       </div>
       <div className="flex flex-col gap-5">
-        <p className="text-center font-semibold opacity-85 hover:opacity-100 transition-opacity duration-300">
+        <p className="text-xs sm:text-sm md:text-base text-start sm:text-center font-semibold opacity-85 hover:opacity-100 transition-opacity duration-300">
           {captions[techType]}
         </p>
         <div className={cn("w-full flex flex-wrap justify-center items-center gap-5")}>
