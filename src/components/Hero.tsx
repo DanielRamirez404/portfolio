@@ -1,6 +1,5 @@
 import { cn, generateUUID, splitIntoN } from "#lib/utils";
 import { motion, type KeyframeOptions } from "motion/react"
-import { Particles } from "./ui/particles";
 import { TranslucidButton, TranslucidIconLink, } from "./reusables/buttons";
 import { faGithub, faLinkedin, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';

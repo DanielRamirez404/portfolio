@@ -1,6 +1,5 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import { TranslucidButton } from "./reusables/buttons";
-import { Particles } from "./ui/particles";
 import { motion } from "motion/react"
 
 import { ES, US, FR, DE, BR, JP, type FlagComponent } from "country-flag-icons/react/3x2";
