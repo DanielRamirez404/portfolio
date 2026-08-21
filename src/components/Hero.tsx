@@ -1,5 +1,5 @@
 import { cn, generateUUID, splitIntoN } from "#lib/utils";
-import { motion, type KeyframeOptions } from "motion/react"
+import { motion, useScroll, useTransform, type KeyframeOptions } from "motion/react"
 import { TranslucidButton, TranslucidIconLink, } from "./reusables/buttons";
 import { faGithub, faLinkedin, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
@@ -7,6 +7,7 @@ import { Download } from 'lucide-react';
 import { useIsMobile } from "#hooks/use-mobile";
 import profilePicture from '#assets/daniel.jpg';
 import { VE } from 'country-flag-icons/react/3x2'
+import { useRef } from "react";
 
 type headerProps = React.ComponentPropsWithoutRef<typeof motion.h1>;
 
@@ -74,8 +75,22 @@ function JobTitleWord({ children, className, animationType, ...props }: JobTitle
 export function Hero() {
   const isMobile = useIsMobile();
 
+  const ref = useRef(null);
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"]
+  });
+
+  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
+  const y = useTransform(scrollYProgress, [0, 1], [0, -100]);
+
   return (
-    <div className="min-h-screen py-[5vh] relative flex flex-col w-full items-center justify-center gap-3">
+    <motion.div
+      className="min-h-screen py-[5vh] relative flex flex-col w-full items-center justify-center gap-3"
+      ref={ref}
+      style={{ opacity, y }}
+    >
 
       <div className="flex flex-row gap-3 items-center justify-center">
         <TranslucidButton rotate className="p-0 rounded-full">
@@ -139,6 +154,6 @@ export function Hero() {
         {isMobile && (<TranslucidIconLink href="tel:+584224047404" icon={faPhone} />)}
       </div>
 
-    </div>
+    </motion.div>
   );
 }

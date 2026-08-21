@@ -10,6 +10,7 @@ type TranslucidButtonProps = React.ComponentPropsWithoutRef<typeof motion.button
   shine?: boolean;
   resize?: boolean;
   active?: boolean;
+  ref?: React.Ref<HTMLButtonElement>;
 }
 
 export function TranslucidButton({ 
