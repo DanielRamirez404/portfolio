@@ -46,15 +46,13 @@ import vsCodeIcon from '#assets/vs-code.webp';
 import zodIcon from '#assets/zod.png';
 import zshIcon from '#assets/zsh.svg';
 import { cn } from "#lib/utils";
+import { useTypedTranslations, type TranslationKey } from "#hooks/useTypedTranslations";
 
-type TechnologyTypes = 'Languages' | 'Frontend' | 'Backend' | 'Databases' | 'Mobile' | 'Low Level' | 'DevOps' | 'IDE' | 'Non-coding';
 
 type Technology = {
   name: string;
   icon: string;
 };
-
-type TechnologiesPerType = Record<TechnologyTypes, Technology[]>;
 
 type Sections = 'Technologies' | 'Langugages';
 
@@ -64,35 +62,50 @@ type Section = {
 };
 
 function TechnologiesSection() {
-  const [techType, setTechType] = useState<TechnologyTypes | 'All'>('All');
+
+  const { t } = useTypedTranslations();
+
+  function asTypedConst<T extends readonly TranslationKey[]>(arr: T): T {
+    return arr;
+  }
+
+  const allTypes = asTypedConst([
+    'programming-languages',
+    'frontend',
+    'backend',
+    'databases',
+    'mobile',
+    'low-level',
+    'devops',
+    'ides',
+    'non-coding',
+  ] as const);
+
+  type TechnologyTypes = typeof allTypes[number];
+
+  type TechnologiesPerType = Record<TechnologyTypes, Technology[]>;
+
+  type AllOptions = TechnologyTypes | 'all';
+
+  const [techType, setTechType] = useState<AllOptions>('all');
   const [selecteds, setSelecteds] = useState<string[]>([]);
 
-  const captions: Record<TechnologyTypes | 'All', string> = {
-
-    'All': "As a dev coding since 2022, with some freelancing experience, I've worked with a bunch of technologies. These are the ones I feel the most comfortable with. I do mostly Web Dev and low-level side projects. Feel free to check the other tabs to read my opinions on each field!",
-
-    'Languages': "These are the languages I feel the most comfortable with. My native (programming) language is C++, so learning others has been a breeze. I'm eager to learn Rust and Go. I tend to lean to JS/TS and python solutions on real projects",
-
-    'Frontend': "It's probably the field I've worked the most with. I like building intuitive and appealing UIs so that the user has a seamless experience. I also value reusability and a fast dev experience, hence I like technologies like next, tailwind and useQuery that do the heavy lifting",
-
-    'Backend': "I like using JS/TS on the backend to boost consistency with the frontend. But of course, the right tech stack should depend on the job's nature, like Go for speed-sensitive needs (which I've dabbled with in a teammate's codebase). I'd love to try Django, FastAPI and Nest.js",
-
-    'Databases': "I've ended up working with different relational DBMSs. I like writing SQL queries myself, so I haven't worked with many ORMs. I'd like to test both redis and mongodb soon since I believe they'd be both fantastic tools to have in my repertoire",
-
-    'Low Level': "I love this stuff, because it's not used for your average CRUD application. I've used these with computer graphics and networking with sockets. Low-level apps usually require better grasp of DSA concepts too",
-
-    'Mobile': "I love Android Studio. I've had a great development experience with it and Jetpack Compose for the UI. Mobile development is one of my favorite fields, at least when it comes down to how fun it is! I also want to give react native a try",
-
-    'DevOps': "These might feel like miscellaneous tools, but bear with me! CI/CD is really a game-changer! especially in real-life projects. I'm also used to using linux since I use arch, btw, and the development experience has been wonderful!",
-
-    'IDE': "Nowadays, I just stick to Neovim, since I've customized it and feel really comfortable and in control. I also love vim motions, it used to feel so weird at first, but it's really cool once you get the hang of it!",
-
-    'Non-coding': "Well, these are the actual miscellaneous tools. Basically technologies which I think are worth mentioning but don't deserve a whole tab per category. I like using Figma for UI drafts and Jira for kanban boards"
+  const captions: Record<AllOptions, string> = {
+    'all': t('all-caption'),
+    'programming-languages': t('programming-languages-caption'),
+    'frontend': t('frontend-caption'),
+    'backend': t('backend-caption'),
+    'databases': t('databases-caption'),
+    'low-level': t('low-level-caption'),
+    'mobile': t('mobile-caption'),
+    'devops': t('devops-caption'),
+    'ides': t('ides-caption'),
+    'non-coding': t('non-coding-caption'),
   };
 
   const techSections: TechnologiesPerType = {
 
-    'Languages': [
+    'programming-languages': [
       { name: 'C++', icon: cppIcon },
       { name: 'JavaScript', icon: jsIcon },
       { name: 'TypeScript', icon: tsIcon },
@@ -101,7 +114,7 @@ function TechnologiesSection() {
       { name: 'PHP', icon: phpIcon },
     ],
 
-    'Frontend': [
+    'frontend': [
       { name: 'Next.js', icon: nextjsIcon },
       { name: 'Vite', icon: viteIcon },
       { name: 'React', icon: reactIcon },
@@ -116,29 +129,29 @@ function TechnologiesSection() {
       { name: 'Shadcn', icon: shadcnIcon },
     ],
 
-    'Backend': [
+    'backend': [
       { name: 'Express', icon: expressIcon },
       { name: 'Next.js', icon: nextjsIcon },
       { name: 'Postman', icon: postmanIcon },
     ],
 
-    'Databases': [
+    'databases': [
       { name: 'PostgreSQL', icon: postgresqlIcon },
       { name: 'MariaDB', icon: mariadbIcon },
       { name: 'MySQL', icon: mysqlIcon },
       { name: 'SQLite', icon: sqliteIcon },
     ],
 
-    'Low Level': [
+    'low-level': [
       { name: 'SDL', icon: sdlIcon },
       { name: 'Boost.Asio', icon: boostAsioIcon },
     ],
 
-    'Mobile': [
+    'mobile': [
       { name: 'Jetpack Compose', icon: jetpackComposeIcon },
     ],
 
-    'DevOps': [
+    'devops': [
       { name: 'Git', icon: gitIcon },
       { name: 'GitHub', icon: githubIcon },
       { name: 'GitHub Actions', icon: githubActionsIcon },
@@ -149,7 +162,7 @@ function TechnologiesSection() {
       { name: 'CMake', icon: cmakeIcon },
     ],
 
-    'IDE': [
+    'ides': [
       { name: 'Neovim', icon: neovimIcon },
       { name: 'Vim', icon: vimIcon },
       { name: 'Visual Studio Code', icon: vsCodeIcon },
@@ -157,7 +170,7 @@ function TechnologiesSection() {
       { name: 'Android Studio', icon: androidStudioIcon },
     ],
 
-    'Non-coding': [
+    'non-coding': [
       { name: 'Figma', icon: figmaIcon },
       { name: 'Jira', icon: jiraIcon },
     ]
@@ -171,7 +184,7 @@ function TechnologiesSection() {
     ).values()
   );
 
-  const areAllChosen = techType === 'All';
+  const areAllChosen = techType === 'all';
 
   const chosenTechnologies = areAllChosen ? allTechnologies : techSections[techType];
 
@@ -181,11 +194,11 @@ function TechnologiesSection() {
         <TranslucidButton
           className="rounded-none w-full whitespace-nowrap min-w-40"
           resize={false}
-          active={techType === 'All'}
-          shine={techType !== 'All'}
-          onClick={() => setTechType('All')}
+          active={techType === 'all'}
+          shine={techType !== 'all'}
+          onClick={() => setTechType('all')}
         >
-          All
+          {t('all')}
         </TranslucidButton>
         {Object.entries(techSections).map(([type, _]) => (
           <TranslucidButton
@@ -196,13 +209,13 @@ function TechnologiesSection() {
             shine={techType !== type}
             onClick={() => setTechType(type as TechnologyTypes)}
           >
-            {type}
+            {t(type as TranslationKey)}
           </TranslucidButton>
         ))}
       </div>
       <div className="flex flex-col gap-5">
         <p className="text-xs sm:text-sm md:text-base text-start sm:text-center font-semibold opacity-85 hover:opacity-100 transition-opacity duration-300">
-          {captions[techType]}
+          {captions[techType as TechnologyTypes | 'all']}
         </p>
         <div className={cn("w-full flex flex-wrap justify-center items-center gap-5")}>
           {chosenTechnologies.map(({ name, icon }) => {
@@ -243,20 +256,14 @@ function TechnologiesSection() {
 
 function LanguagesSection() {
 
-  type LanguageName =
-    | "Spanish"
-    | "English"
-    | "French"
-    | "German"
-    | "Portuguese"
-    | "Japanese";
+  const { t } = useTypedTranslations();
 
-  const [selected, setSelected] = useState<LanguageName | null>(null);
+  const [selected, setSelected] = useState<string | null>(null);
 
   const [isExampleOpen, setExampleOpenStatus] = useState<boolean>(false);
 
   type Language = {
-    name: LanguageName;
+    name: string;
     level: string;
     flag: FlagComponent;
     description: string;
@@ -265,45 +272,45 @@ function LanguagesSection() {
 
   const languages: Language[] = [
     {
-      name: "Spanish",
-      level: "Native",
+      name: t('spanish'),
+      level: t('native'),
       flag: ES,
-      description: "As my native language, it's helped me a great deal to learn other languages that share several traits!",
+      description: t('spanish-caption'),
       example: "Lo genial del español es que, pese a haber tantos dialectos, son todos bastante inteligibles entre sí"
     },
     {
-      name: "English",
+      name: t('english'),
       level: "C1",
       flag: US,
-      description: "It's sort of my default language for my studies, online life and even my entertainment, so I'm pretty used to it",
+      description: t('english-caption'),
       example: "English is the most useful language in software development since it's basically ubiquitous"
     },
     {
-      name: "French",
+      name: t('french'),
       level: "B2",
       flag: FR,
-      description: "My favorite one! It's been quite easy for me to pick up. Plus, I love Francophone YouTube and Music",
+      description: t('french-caption'),
       example: "Perso, je trouve le verlan et les expressions d'argot français vachement chouettes !"
     },
     {
-      name: "German",
+      name: t('german'),
       level: "B1",
       flag: DE,
-      description: "It's not as hard as I once thought. I'm far better listening and reading than speaking, but I'm still learning!",
+      description: t('german-caption'),
       example: "Ich möchte mehr deutsche Inhalte konsumieren, um besser zu werden. Ich glaube auch, dass sie einen schönen Klang hat"
     },
     {
-      name: "Portuguese",
+      name: t('portuguese'),
       level: "B1",
       flag: BR,
-      description: "I'm really into how it sounds. As a Spanish speaker, it's fairly easy, but it's still its own different language",
+      description: t('portuguese-caption'),
       example: "Gosto muito da sonoridade dessa língua. Não conheço muitas gírias ainda, mas estou com vontade de aprender!"
     },
     {
-      name: "Japanese",
+      name: t('japanese'),
       level: "N5",
       flag: JP,
-      description: "I'm kind of rusty, but I love it! I don't practice enough since I'm focused on other languagues at the moment",
+      description: t('japanese-caption'),
       example: "日本語で話すのは本当に難しいし、聞く時もあまり分からないけど、アニメを見たりマンガを読んだりできるから、なんとかなるはずだよね！"
     },
   ];
@@ -314,7 +321,7 @@ function LanguagesSection() {
 
   useLayoutEffect(() => {
     if (!selected) {
-      setSelected('Spanish');
+      setSelected(t('spanish'));
       return;
     }
 
@@ -330,7 +337,7 @@ function LanguagesSection() {
     const delta = containerCenter - itemCenter;
 
     setOffset((prev) => prev + delta);
-  }, [selected]);
+  }, [selected, t]);
 
   return (
     <div ref={containerRef} className="min-h-[50vh] flex items-center mt-7">
@@ -404,11 +411,13 @@ function LanguagesSection() {
 
 export function Skills() {
 
+  const { t } = useTypedTranslations()
+
   const [section, setSection] = useState<Sections>('Technologies');
 
   const sections: Section[] = [
-    { name: 'Technologies', type: 'Technologies' },
-    { name: 'Languages', type: 'Langugages' },
+    { name: t('technologies'), type: 'Technologies' },
+    { name: t('spoken-languages'), type: 'Langugages' },
   ];
 
   const containerRef = useRef(null);
@@ -451,7 +460,7 @@ export function Skills() {
         ) : (
           <>
             <p className="translate-y-5 text-center font-semibold opacity-85 hover:opacity-100 transition-opacity duration-300">
-              Click on the cards to read an example!
+              {t('spoken-languages-caption')}
             </p>
             <LanguagesSection />
           </>

@@ -4,6 +4,7 @@ import { cn } from '#lib/utils';
 import { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { useIsMobile } from "#hooks/use-mobile";
 
 type TranslucidButtonProps = React.ComponentPropsWithoutRef<typeof motion.button> & {
   rotate?: boolean;
@@ -88,4 +89,22 @@ export function TranslucidIconLink({ icon, href, target, rel, ...props }: Transl
       </TranslucidButton>
     </a>
   );
+}
+
+type IconButtonProps = React.ComponentPropsWithoutRef<typeof motion.button>;
+
+export function IconButton({ className, children, ...props }: IconButtonProps) {
+  const isMobile = useIsMobile();
+
+  return (
+    <motion.button
+      initial={{ scale: 1 }}
+      whileHover={{ scale: 1.25 }}
+      whileTap={{ scale: isMobile ? 0.8 : undefined }}
+      className={cn("cursor-pointer", className)}
+      {...props}
+    >
+      {children} 
+    </motion.button>
+  ); 
 }

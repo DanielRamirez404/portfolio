@@ -1,13 +1,32 @@
 import { cn, generateUUID, splitIntoN } from "#lib/utils";
 import { motion, useScroll, useTransform, type KeyframeOptions } from "motion/react"
-import { TranslucidButton, TranslucidIconLink, } from "./reusables/buttons";
+import { IconButton, TranslucidButton, TranslucidIconLink, } from "./reusables/buttons";
 import { faGithub, faLinkedin, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
-import { ChevronDown, ChevronsDown, Download, Languages, Volume2 } from 'lucide-react';
+import { ChevronsDown, Download, Languages, Volume2 } from 'lucide-react';
 import { useIsMobile } from "#hooks/use-mobile";
 import profilePicture from '#assets/daniel.jpg';
 import { VE } from 'country-flag-icons/react/3x2'
 import { useRef } from "react";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "#components/ui/dropdown-menu"
+
+import { useTypedTranslations } from "#hooks/useTypedTranslations";
+import { availableLanguages } from "#data/languages:";
+import type { i18n } from "@vidstack/react/types/vidstack-react.js";
 
 type headerProps = React.ComponentPropsWithoutRef<typeof motion.h1>;
 
@@ -44,7 +63,7 @@ function JobTitleWord({ children, className, animationType, ...props }: JobTitle
     <div className="flex flex-row">
       {chunks.map((chunk, i) => (
         <JobTitleWord
-          key={generateUUID()}
+          key={`Job-${i}`}
           animationType="simple"
           initial={{ clipPath: "inset(0 0 100% 0)" }}
           animate={{
@@ -73,6 +92,8 @@ function JobTitleWord({ children, className, animationType, ...props }: JobTitle
 }
 
 export function Hero() {
+  const { t, i18n } = useTypedTranslations();
+
   const isMobile = useIsMobile();
 
   const ref = useRef(null);
@@ -97,7 +118,7 @@ export function Hero() {
             ~
           </span>
           /
-          <motion.span 
+          <motion.span
             className="text-charcoal-blue-400 text-xl"
             animate={{ opacity: [1, 0, 0, 1] }}
             transition={{ repeat: Infinity, duration: 2 }}
@@ -106,8 +127,28 @@ export function Hero() {
           </motion.span>
         </div>
         <div className="flex-1 flex flex-row gap-5 justify-end items-center">
-          <Languages />
-          <Volume2 />
+          <DropdownMenu>
+            <DropdownMenuTrigger render={
+              <IconButton>
+                <Languages />
+              </IconButton>
+            } />
+            <DropdownMenuContent className="w-40" align="start">
+              <DropdownMenuGroup>
+                <DropdownMenuLabel>{t('available-languages')}</DropdownMenuLabel>
+                {Object.entries(availableLanguages).map(([code, { flag: Flag, nativeName }]) => (
+                  <DropdownMenuItem key={code} className="cursor-pointer font-bold" onClick={ () => i18n.changeLanguage(code) }>
+                    <Flag className="h-8! w-8! rounded-md overflow-hidden" />
+                    {nativeName}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <IconButton>
+            <Volume2 />
+          </IconButton>
         </div>
       </div>
 
@@ -136,7 +177,7 @@ export function Hero() {
 
       <div className="flex flex-col items-center justify-center">
         <JobTitleWord animationType="complex">
-          SOFTWARE
+          {t('first-job-header')}
         </JobTitleWord>
 
         <div className="flex flex-row justify-center items-center gap-1.5 sm:gap-3">
@@ -147,7 +188,7 @@ export function Hero() {
               delay: 2,
             }}
           >
-            ENGINEER
+            {t('second-job-header')}
           </JobTitleWord>
 
           <a
@@ -157,7 +198,9 @@ export function Hero() {
           >
             <TranslucidButton className="flex flex-row items-center justify-center gap-1 px-2 py-1 sm:px-3 sm:py-2">
               <Download size={isMobile ? 14 : 16} className="shrink-0" />
-              <span className="leading-none sm:mb-[0.1rem] text-xs sm:text-base">{isMobile ? "Get" : "Download"} my CV!</span>
+              <span className="leading-none sm:mb-[0.1rem] text-xs sm:text-base">
+                {isMobile ? t('short-download-cv') : t('long-download-cv')}
+              </span>
             </TranslucidButton>
           </a>
 
@@ -175,18 +218,18 @@ export function Hero() {
 
       <motion.div
         className="translate-y-10"
-        animate={{ 
+        animate={{
           opacity: [0, 0, 1, 1, 0],
           y: [0, 0, -10, 40, 40]
         }}
-        transition={{ 
-          duration: 3, 
+        transition={{
+          duration: 3,
           repeat: Infinity,
           ease: 'easeInOut',
           times: [0, 0.3, 0.6, 0.8, 1]
         }}
       >
-        <ChevronsDown className="w-15 h-15" /> 
+        <ChevronsDown className="w-15 h-15" />
       </motion.div>
 
     </motion.div>

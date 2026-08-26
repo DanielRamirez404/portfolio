@@ -32,8 +32,11 @@ import {
 } from "#components/ui/dialog"
 import { useIsMobile } from "#hooks/use-mobile";
 import { useLenis } from "#hooks/useLenis";
+import { useTypedTranslations } from "#hooks/useTypedTranslations";
 
 export function Projects() {
+
+  const { t } = useTypedTranslations();
 
   type Project = {
     name: string;
@@ -58,7 +61,7 @@ export function Projects() {
       name: 'Apolo UGMA',
       type: 'Freelance',
       priority: 'high',
-      description: "UX-focused automatic student enrollment projection & academic scheduling web app for the UGMA university where I built the entire frontend",
+      description: t('apolo-caption'),
       img: apoloImg,
       video: apoloVideo,
       stack: ["Next.js", "TypeScript", "Tailwind", "Tanstack Query", "Zod", "Shadcn"],
@@ -68,7 +71,7 @@ export function Projects() {
       name: 'Woolly Breakout',
       type: 'Project',
       priority: 'high',
-      description: "2D real-time local multiplayer cross-platform game built with client-server architecture and TCP sockets",
+      description: t('woolly-breakout-caption'),
       img: woollyBreakoutImg,
       video: woollyBreakoutVideo,
       stack: ["C++20", "SDL2", "Boost.Asio", "CMake"],
@@ -78,7 +81,7 @@ export function Projects() {
       name: 'Asia Bar Restaurant Web',
       type: 'Freelance',
       priority: 'high',
-      description: "Led and built most of a POS & kitchen ticket generation system for a local restaurant",
+      description: t('asia-bar-caption'),
       img: asiaBarImg,
       video: asiaBarVideo,
       stack: ["Node.js", "Express.js", "JWT", "MariaDB", "React", "JavaScript", "CSS"],
@@ -88,7 +91,7 @@ export function Projects() {
       name: 'The Best Chess Clone',
       type: 'Project',
       priority: 'low',
-      description: "Cross-platform chess clone integrating a custom bot made with a minmax backtracking AI algorithm",
+      description: t('chess-caption'),
       img: chessImg,
       video: chessVideo,
       stack: ["C++20", "SDL2", "CMake"],
@@ -98,7 +101,7 @@ export function Projects() {
       name: 'Library Management System',
       type: 'University',
       priority: 'low',
-      description: "Circulation loans management system built for the Julián Temístocles Maza public library",
+      description: t('library-caption'),
       img: libraryImg,
       video: libraryVideo,
       stack: ["React", "JavaScript", "Tailwind"],
@@ -158,11 +161,11 @@ export function Projects() {
         <div className="w-[95%] lg:w-[70%] flex flex-col items-center justify-center max-w-200 gap-8 px-5">
 
           <h3 className="text-3xl font-semibold self-start">
-            Projects
+            {t('projects-header')}
           </h3>
 
           <p className="text-center font-semibold opacity-85 hover:opacity-100 transition-opacity duration-300">
-            Click on the cards to watch a short demo!
+            {t('projects-caption')}
           </p>
 
           <div className="w-full flex flex-row flex-wrap gap-10 items-strech justify-center">
@@ -231,7 +234,7 @@ export function Projects() {
                                 }}
                               />
                               <AnimatedGradientText className="text-xs">
-                                Freelance
+                                {t('freelance-bagde')}
                               </AnimatedGradientText>
                             </div>
                           ) : (
@@ -251,7 +254,7 @@ export function Projects() {
                                 }}
                               />
                               <span className="text-xs text-bright-snow-200">
-                                {type}
+                                {type === 'Project' ? t('project-badge') : t('university-badge')}
                               </span>
                             </div>
                           )

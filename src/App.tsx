@@ -4,6 +4,7 @@ import { Projects } from "#components/Projects";
 import { Skills } from "#components/Skills";
 import { Particles } from "#components/ui/particles";
 import { LenisProvider } from "#hooks/lenis/provider.tsx";
+import './data/i18next'
 
 function App() {
   return (
