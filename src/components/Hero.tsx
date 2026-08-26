@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform, type KeyframeOptions } from "motion/re
 import { TranslucidButton, TranslucidIconLink, } from "./reusables/buttons";
 import { faGithub, faLinkedin, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
-import { Download } from 'lucide-react';
+import { ChevronDown, ChevronsDown, Download, Languages, Volume2 } from 'lucide-react';
 import { useIsMobile } from "#hooks/use-mobile";
 import profilePicture from '#assets/daniel.jpg';
 import { VE } from 'country-flag-icons/react/3x2'
@@ -91,6 +91,25 @@ export function Hero() {
       ref={ref}
       style={{ opacity, y }}
     >
+      <div className="absolute top-0 w-full px-10 md:px-25 lg:px-50 flex flex-row h-15 items-center justify-around">
+        <div className="flex-1 text-xl tracking-widest select-none">
+          <span className="text-charcoal-blue-400">
+            ~
+          </span>
+          /
+          <motion.span 
+            className="text-charcoal-blue-400 text-xl"
+            animate={{ opacity: [1, 0, 0, 1] }}
+            transition={{ repeat: Infinity, duration: 2 }}
+          >
+            ▮
+          </motion.span>
+        </div>
+        <div className="flex-1 flex flex-row gap-5 justify-end items-center">
+          <Languages />
+          <Volume2 />
+        </div>
+      </div>
 
       <div className="flex flex-row gap-3 items-center justify-center">
         <TranslucidButton rotate className="p-0 rounded-full">
@@ -153,6 +172,22 @@ export function Hero() {
         <TranslucidIconLink href="mailto:danielramirezabou@gmail.com" icon={faEnvelope} />
         {isMobile && (<TranslucidIconLink href="tel:+584224047404" icon={faPhone} />)}
       </div>
+
+      <motion.div
+        className="translate-y-10"
+        animate={{ 
+          opacity: [0, 0, 1, 1, 0],
+          y: [0, 0, -10, 40, 40]
+        }}
+        transition={{ 
+          duration: 3, 
+          repeat: Infinity,
+          ease: 'easeInOut',
+          times: [0, 0.3, 0.6, 0.8, 1]
+        }}
+      >
+        <ChevronsDown className="w-15 h-15" /> 
+      </motion.div>
 
     </motion.div>
   );
