@@ -411,24 +411,26 @@ export function Skills() {
     { name: 'Languages', type: 'Langugages' },
   ];
 
-  const ref = useRef(null);
+  const containerRef = useRef(null);
 
   const { scrollYProgress } = useScroll({
-    target: ref,
+    target: containerRef,
     offset: ["start end", "start start"]
   });
 
   const opacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
-  const x = useTransform(scrollYProgress, [0, 1], [-50, 0]);
+  const y = useTransform(scrollYProgress, [0, 1], [-50, 0]);
 
   return (
-    <motion.div
-      className="min-h-screen py-[5vh] relative flex flex-col w-full items-center pt-[10vh]"
-      ref={ref}
-      style={{ opacity, x }}
+    <div
+      ref={containerRef}
+      className="min-h-screen py-[5vh] relative flex flex-col w-screen items-center pt-[10vh]"
     >
+      <motion.div
+        className="w-[90%] flex flex-col items-center justify-center max-w-200 gap-3 px-5"
+        style={{ opacity, y }}
+      >
 
-      <div className="w-[90%] flex flex-col items-center justify-center max-w-200 gap-3 px-5">
         <div className="flex flex-row w-full">
           {sections.map(({ name, type }) => (
             <TranslucidButton
@@ -455,9 +457,8 @@ export function Skills() {
           </>
         )}
 
-      </div>
-
-    </motion.div>
+      </motion.div>
+    </div>
   );
 }
 
