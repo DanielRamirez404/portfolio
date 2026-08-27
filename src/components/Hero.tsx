@@ -3,11 +3,12 @@ import { motion, useScroll, useTransform, type KeyframeOptions } from "motion/re
 import { IconButton, TranslucidButton, TranslucidIconLink, } from "./reusables/buttons";
 import { faGithub, faLinkedin, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
-import { ChevronsDown, Download, Languages, Volume2 } from 'lucide-react';
+import { ChevronsDown, Download, Languages, Play, Square, StepBack, StepForward, Volume2, VolumeX } from 'lucide-react';
 import { useIsMobile } from "#hooks/use-mobile";
 import profilePicture from '#assets/daniel.jpg';
 import { VE } from 'country-flag-icons/react/3x2'
 import { useRef } from "react";
+
 
 import {
   DropdownMenu,
@@ -15,18 +16,13 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "#components/ui/dropdown-menu"
 
 import { useTypedTranslations } from "#hooks/useTypedTranslations";
 import { availableLanguages } from "#data/languages:";
-import type { i18n } from "@vidstack/react/types/vidstack-react.js";
+import { useVolume } from "#hooks/useAudio";
+import { usePlaylist } from "#hooks/usePlaylist";
 
 type headerProps = React.ComponentPropsWithoutRef<typeof motion.h1>;
 
@@ -40,7 +36,7 @@ function JobTitleWord({ children, className, animationType, ...props }: JobTitle
   if (animationType === 'simple') {
     return (
       <motion.h1
-        className={cn(className, "z-20 text-4xl/8 sm:text-7xl/10 md:text-8xl/20 font-bold text-center align-middle")}
+        className={cn(className, "z-20 text-4xl/8 sm:text-7xl/14 md:text-8xl/20 font-bold text-center align-middle")}
         initial={{ x: "-15%", opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         {...props}
@@ -106,13 +102,17 @@ export function Hero() {
   const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
   const y = useTransform(scrollYProgress, [0, 1], [0, -100]);
 
+  const volume = useVolume();
+
+  const playlist = usePlaylist();
+
   return (
     <motion.div
       className="min-h-screen py-[5vh] relative flex flex-col w-full items-center justify-center gap-3"
       ref={ref}
       style={{ opacity, y }}
     >
-      <div className="absolute top-0 w-full px-10 md:px-25 lg:px-50 flex flex-row h-15 items-center justify-around">
+      <div className="absolute top-0 w-full px-10 md:px-25 lg:px-50 flex flex-row h-15 items-center justify-around pt-5">
         <div className="flex-1 text-xl tracking-widest select-none">
           <span className="text-charcoal-blue-400">
             ~
@@ -126,29 +126,60 @@ export function Hero() {
             ▮
           </motion.span>
         </div>
-        <div className="flex-1 flex flex-row gap-5 justify-end items-center">
-          <DropdownMenu>
-            <DropdownMenuTrigger render={
-              <IconButton>
-                <Languages />
-              </IconButton>
-            } />
-            <DropdownMenuContent className="w-40" align="start">
-              <DropdownMenuGroup>
-                <DropdownMenuLabel>{t('available-languages')}</DropdownMenuLabel>
-                {Object.entries(availableLanguages).map(([code, { flag: Flag, nativeName }]) => (
-                  <DropdownMenuItem key={code} className="cursor-pointer font-bold" onClick={ () => i18n.changeLanguage(code) }>
-                    <Flag className="h-8! w-8! rounded-md overflow-hidden" />
-                    {nativeName}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuGroup>
-            </DropdownMenuContent>
-          </DropdownMenu>
+        <div className="flex-1 flex flex-row lg:gap-10 gap-5 justify-end items-center">
 
-          <IconButton>
-            <Volume2 />
-          </IconButton>
+          <div className="flex flex-row gap-3 items-center">
+            <DropdownMenu>
+              <DropdownMenuTrigger render={
+                <IconButton>
+                  <Languages />
+                </IconButton>
+              } />
+              <DropdownMenuContent className="w-40" align="start">
+                <DropdownMenuGroup>
+                  <DropdownMenuLabel>{t('available-languages')}</DropdownMenuLabel>
+                  {Object.entries(availableLanguages).map(([code, { flag: Flag, nativeName }]) => (
+                    <DropdownMenuItem key={code} className="cursor-pointer font-bold" onClick={() => i18n.changeLanguage(code)}>
+                      <Flag className="h-8! w-8! rounded-md overflow-hidden" />
+                      {nativeName}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            <IconButton>
+              {volume.isMuted
+                ? <VolumeX onClick={() => volume.toggle()} />
+                : <Volume2 onClick={() => volume.toggle()} />
+              }
+            </IconButton>
+
+          </div>
+
+          <div className="relative flex flex-col items-center justify-center">
+            <div className="flex flex-row gap-2 items-center justify-center">
+              <IconButton>
+                <StepBack className="w-5! h-5!" onClick={() => playlist.skipToPrev()} />
+              </IconButton>
+              <IconButton>
+                {
+                  playlist.isPlaying
+                    ? <Square className="w-5! h-5!" onClick={() => playlist.pause()} />
+                    : <Play className="w-5! h-5!" onClick={() => playlist.resume()} />
+                }
+              </IconButton>
+              <IconButton>
+                <StepForward className="w-5! h-5!" onClick={() => playlist.skipToNext()} />
+              </IconButton>
+            </div>
+
+            <div className="absolute top-full mt-1 left-0 right-0 flex justify-center overflow-x-hidden">
+              <p className="max-w-full text-center text-xs text-nowrap animate-infinite-scroll">
+                {playlist.currentPlaying}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 
