@@ -1,4 +1,4 @@
-import { cn, generateUUID, splitIntoN } from "#lib/utils";
+import { cn, splitIntoN } from "#lib/utils";
 import { motion, useScroll, useTransform, type KeyframeOptions } from "motion/react"
 import { IconButton, TranslucidButton, TranslucidIconLink, } from "./reusables/buttons";
 import { faGithub, faLinkedin, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
@@ -175,7 +175,7 @@ export function Hero() {
             </div>
 
             <div className="absolute top-full mt-1 left-0 right-0 flex justify-center overflow-x-hidden">
-              <p className="max-w-full text-center text-xs text-nowrap animate-infinite-scroll">
+              <p className="max-w-full min-w-full text-center text-xs text-nowrap animate-infinite-scroll">
                 {playlist.currentPlaying}
               </p>
             </div>

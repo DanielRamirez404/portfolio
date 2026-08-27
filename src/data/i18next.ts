@@ -1,7 +1,6 @@
 import i18next from "i18next";
 import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
-import { transform } from "motion";
 
 export const english_translations = {
   // Hero Section

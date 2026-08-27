@@ -316,7 +316,7 @@ function LanguagesSection() {
   ];
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const itemRefs = useRef<Partial<Record<LanguageName, HTMLDivElement | null>>>({});
+  const itemRefs = useRef<Partial<Record<string, HTMLDivElement | null>>>({});
   const [offset, setOffset] = useState(0);
 
   useLayoutEffect(() => {
