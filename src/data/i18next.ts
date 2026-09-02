@@ -100,6 +100,10 @@ export const english_translations = {
     "Cross-platform chess clone integrating a custom bot made with a minmax backtracking AI algorithm",
   "library-caption":
     "Circulation loans management system built for the Julián Temístocles Maza public library",
+
+  // Footer 
+  email: "Email",
+  letsConnect: "Let's Connect!"
 };
 
 export const spanish_translations = {
@@ -178,7 +182,11 @@ export const spanish_translations = {
   "woolly-breakout-caption": "Videojuego 2D multiplataforma y multijugador local a tiempo real creado con arquitectura cliente-servidor y sockets TCP",
   "asia-bar-caption": "Lideré y concebí la mayor parte de un sistema POS y de generación de tickets de cocina para un restaurante local",
   "chess-caption": "Clon de ajedrez multiplataforma que integra un bot como contrincante cuya IA se basa en el algoritmo de backtracking minmax",
-  "library-caption": "Sistema de gestión de préstamos circulantes para la Biblioteca Pública Julián Temístocles Maza"
+  "library-caption": "Sistema de gestión de préstamos circulantes para la Biblioteca Pública Julián Temístocles Maza",
+
+  // Footer 
+  email: "Correo",
+  letsConnect: "¡Contáctame!"
 };
 
 
