@@ -387,12 +387,11 @@ function LanguagesSection() {
                       <p>{example}</p>
                     ) : (
                       <>
-                        <h3 className="text-2xl">{name}</h3>
+                        <p className="text-2xl">{name}</p>
                         <p>{description}</p>
                       </>
 
                     )
-
 
                   : (
                     <div className="absolute left-1/2 -translate-x-1/2 translate-y-full font-bold text-charcoal-blue-400 bg-charcoal-blue-950 border border-bright-snow-200 rounded-md p-1.5">

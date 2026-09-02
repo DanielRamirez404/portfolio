@@ -160,9 +160,9 @@ export function Projects() {
 
         <div className="w-[95%] lg:w-[70%] flex flex-col items-center justify-center max-w-200 gap-8 px-5">
 
-          <h3 className="text-3xl font-semibold self-start">
+          <h2 className="text-3xl font-semibold self-start">
             {t('projects-header')}
-          </h3>
+          </h2>
 
           <p className="text-center font-semibold opacity-85 hover:opacity-100 transition-opacity duration-300">
             {t('projects-caption')}
@@ -213,6 +213,7 @@ export function Projects() {
                             className="h-50 w-auto"
                             src={img}
                             fetchPriority={priority}
+                            alt={`${name}-project-image`}
                           />
                         </div>
 

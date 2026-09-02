@@ -18,7 +18,7 @@ export function Footer() {
   const y = useTransform(scrollYProgress, [0, 1], [50, 0]);
 
   return (
-    <div ref={ref} className="w-full pb-14 sm:pb-28 pt-8 sm:pt-16">
+    <footer ref={ref} className="w-full pb-14 sm:pb-28 pt-8 sm:pt-16">
       <motion.div
         style={{ opacity, y }}
         className="w-full flex flex-col items-center justify-center"
@@ -52,6 +52,6 @@ export function Footer() {
         </div>
 
       </motion.div>
-    </div>
+    </footer>
   );
 }

@@ -118,7 +118,7 @@ export function Hero() {
   const playlist = usePlaylist();
 
   return (
-    <motion.div
+    <motion.header
       className="min-h-screen py-[5vh] relative flex flex-col w-full items-center justify-center gap-3"
       ref={ref}
       initial={{ opacity: 0 }}
@@ -152,7 +152,7 @@ export function Hero() {
           >
             <DropdownMenu>
               <DropdownMenuTrigger render={
-                <IconButton>
+                <IconButton aria-label="translate">
                   <Languages />
                 </IconButton>
               } />
@@ -169,7 +169,7 @@ export function Hero() {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <IconButton>
+            <IconButton aria-label="toggle volume">
               {volume.isMuted
                 ? <VolumeX onClick={() => volume.toggle()} />
                 : <Volume2 onClick={() => volume.toggle()} />
@@ -180,17 +180,17 @@ export function Hero() {
 
           <div className="relative flex flex-col items-center justify-center">
             <div className="flex flex-row gap-2 items-center justify-center">
-              <IconButton>
+              <IconButton aria-label="prev song">
                 <StepBack className="w-5! h-5!" onClick={() => playlist.skipToPrev()} />
               </IconButton>
-              <IconButton>
+              <IconButton aria-label="toggle song play">
                 {
                   playlist.isPlaying
                     ? <Square className="w-5! h-5!" onClick={() => playlist.pause()} />
                     : <Play className="w-5! h-5!" onClick={() => playlist.resume()} />
                 }
               </IconButton>
-              <IconButton>
+              <IconButton aria-label="next song">
                 <StepForward className="w-5! h-5!" onClick={() => playlist.skipToNext()} />
               </IconButton>
             </div>
@@ -228,7 +228,7 @@ export function Hero() {
           />
         </TranslucidButton>
         <div className="flex flex-col">
-          <h2 className="font-bold text-xl sm:text-2xl leading-none">Daniel Ramírez</h2>
+          <p className="font-bold text-xl sm:text-2xl leading-none">Daniel Ramírez</p>
           <div className="flex flex-row items-center gap-1.5">
             <VE className="h-10 w-10 rounded-md overflow-hidden" />
             <div className="text-xs leading-none">
@@ -320,11 +320,43 @@ export function Hero() {
           isCurtainOn && "invisible"
         )}
       >
-        <TranslucidIconLink href="https://github.com/DanielRamirez404" target="_blank" rel="noreferrer" icon={faGithub} />
-        <TranslucidIconLink href="https://www.linkedin.com/in/danielramirezabou/" target="_blank" rel="noreferrer" icon={faLinkedin} />
-        <TranslucidIconLink href="https://wa.link/mbd8fh" target="_blank" rel="noreferrer" icon={faWhatsapp} />
-        <TranslucidIconLink href="mailto:danielramirezabou@gmail.com" icon={faEnvelope} />
-        {isMobile && (<TranslucidIconLink href="tel:+584224047404" icon={faPhone} />)}
+        <TranslucidIconLink
+          href="https://github.com/DanielRamirez404"
+          target="_blank"
+          rel="noreferrer"
+          icon={faGithub}
+          aria-label="GitHub"
+        />
+
+        <TranslucidIconLink
+          href="https://www.linkedin.com/in/danielramirezabou/"
+          target="_blank"
+          rel="noreferrer"
+          icon={faLinkedin}
+          aria-label="LinkedIn"
+        />
+
+        <TranslucidIconLink
+          href="https://wa.link/mbd8fh"
+          target="_blank"
+          rel="noreferrer"
+          icon={faWhatsapp}
+          aria-label="WhatsApp"
+        />
+
+        <TranslucidIconLink
+          href="mailto:danielramirezabou@gmail.com"
+          icon={faEnvelope}
+          aria-label="Email"
+        />
+
+        {isMobile && (
+          <TranslucidIconLink
+            href="tel:+584224047404"
+            icon={faPhone}
+            aria-label="Phone"
+          />
+        )}
       </motion.div>
 
       <motion.div
@@ -344,6 +376,6 @@ export function Hero() {
         <ChevronsDown className="w-15 h-15" />
       </motion.div>
 
-    </motion.div>
+    </motion.header>
   );
 }

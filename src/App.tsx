@@ -22,8 +22,10 @@ function App() {
           />
           <Curtain delay={3} />
           <Hero />
-          <Skills />
-          <Projects />
+          <main className="w-full">
+            <Skills />
+            <Projects />
+          </main>
           <Footer />
         </div>
       </SoundProvider>
