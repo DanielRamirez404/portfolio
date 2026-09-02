@@ -1,4 +1,4 @@
-import { motion } from "motion/react"
+import { motion, useAnimationControls } from "motion/react"
 import './buttons.css'
 import { cn } from '#lib/utils';
 import { useState } from "react";
@@ -14,18 +14,19 @@ type TranslucidButtonProps = React.ComponentPropsWithoutRef<typeof motion.button
   ref?: React.Ref<HTMLButtonElement>;
 }
 
-export function TranslucidButton({ 
-  rotate, 
-  resize = true, 
-  active = false, 
-  className, 
-  shine = true, 
+export function TranslucidButton({
+  rotate,
+  resize = true,
+  active = false,
+  className,
+  shine = true,
   children,
   onHoverStart,
   onHoverEnd,
-  ...props 
+  ...props
 }: TranslucidButtonProps) {
-  const [isHovered, setIsHovered] = useState(false);
+  const [isHovered, setIsHovered] = useState<boolean>(false);
+  const controls = useAnimationControls();
 
   return (
     <motion.button
@@ -42,20 +43,48 @@ export function TranslucidButton({
       onHoverStart={
         (event, info) => {
           setIsHovered(true);
+          controls.stop();
+          controls.start({
+            rotate: rotate ? -10 : undefined,
+            scale: resize ? 1.1 : undefined,
+            transition: { duration: 0.2, ease: "easeInOut" }
+          });
           onHoverStart?.(event, info);
         }
       }
       onHoverEnd={
         (event, info) => {
           setIsHovered(false);
+
+          controls.start({
+            scale: 1,
+            rotate: rotate ? [-10, 12, 0] : undefined,
+            transition: {
+              duration: 0.4,
+              times: [0, 0.6, 1],
+              ease: "easeOut"
+            },
+          })
+
           onHoverEnd?.(event, info);
         }
       }
 
-      animate={{ rotate: isHovered ? -10 : rotate ? [-10, 12, 0] : 0 }}
+      onTapStart={
+        () => {
+          controls.start({
+            scale: resize ? [0.95, 1.1] : undefined,
+            transition: {
+              duration: 0.4,
+              times: [0, 0.6, 1],
+              ease: "easeOut"
+            },
+          })
+        }
+      }
 
-      whileHover={{ scale: resize ? 1.1 : undefined, rotate: rotate ? -10 : undefined }}
-      whileTap={{ scale: resize ? 0.95 : undefined }}
+
+      animate={controls}
 
       transition={{
         scale: {
@@ -104,7 +133,7 @@ export function IconButton({ className, children, ...props }: IconButtonProps) {
       className={cn("cursor-pointer", className)}
       {...props}
     >
-      {children} 
+      {children}
     </motion.button>
-  ); 
+  );
 }

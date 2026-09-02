@@ -141,7 +141,7 @@ export function Projects() {
 
   return (
     <div ref={containerRef} className="min-h-screen py-[5vh] relative flex flex-col w-screen items-center gap-3">
-      <motion.div style={{ opacity, y }} className="w-full flex flex-col items-center gap-8">
+      <motion.div style={{ opacity, y }} className="w-full flex flex-col items-center justify-center gap-8">
 
         <Dialog open={isVideoPlayerOpen} onOpenChange={setVideoPlayerOpenStatus}>
           <DialogContent className="sm:max-w-3xl">
@@ -174,21 +174,9 @@ export function Projects() {
                 const { name, img, type, priority, description, stack } = project;
 
                 return (
-                  <TranslucidButton
+                  <motion.div
+
                     key={name}
-
-                    ref={name === lastPriorityProject?.name ? lastPriorityProjectRef : null}
-
-                    className={cn(
-                      "relative w-full md:w-75 flex flex-col gap-5 items-start"
-                    )}
-
-                    shine={false}
-
-                    onClick={() => {
-                      selectedProject.current = project;
-                      setVideoPlayerOpenStatus(true);
-                    }}
 
                     initial={priority === 'high' ? {} : { opacity: 0.25, y: "-5%" }}
                     animate={priority === 'high' ? {} : { opacity: 1, y: 0 }}
@@ -198,89 +186,107 @@ export function Projects() {
                       duration: 0.6,
                       ease: 'easeInOut'
                     }}
+
+                    className="flex flex-row items-center justify-center md:w-75" 
+
                   >
+                    <TranslucidButton
 
-                    <div className="w-full flex flex-col items-center gap-1">
+                      ref={name === lastPriorityProject?.name ? lastPriorityProjectRef : null}
 
-                      <div className="flex w-full flex-row justify-center bg-charcoal-blue-900 overflow-hidden rounded-2xl">
-                        <img
-                          className="h-50 w-auto"
-                          src={img}
-                          fetchPriority={priority}
-                        />
+                      className={cn(
+                        "relative w-75 flex flex-col gap-5 items-start h-full"
+                      )}
+
+                      shine={false}
+
+                      onClick={() => {
+                        selectedProject.current = project;
+                        setVideoPlayerOpenStatus(true);
+                      }}
+                    >
+
+                      <div className="w-full flex flex-col items-center gap-1">
+
+                        <div className="flex w-full flex-row justify-center bg-charcoal-blue-900 overflow-hidden rounded-2xl">
+                          <img
+                            className="h-50 w-auto"
+                            src={img}
+                            fetchPriority={priority}
+                          />
+                        </div>
+
+
+                        <div className="w-full flex flex-row items-center justify-between gap-3">
+                          <h4 className="text-base md:text-lg truncate flex-1 text-start max-w-[75%]">
+                            {name}
+                          </h4>
+
+                          {
+                            type === "Freelance" ? (
+                              <div className="group relative rounded-full px-2 shadow-[inset_0_-8px_10px_#8fdfff1f] transition-shadow duration-500 ease-out hover:shadow-[inset_0_-5px_10px_#8fdfff3f]">
+                                <span
+                                  className={cn(
+                                    "animate-gradient absolute inset-0 block h-full w-full rounded-[inherit]",
+                                    "bg-linear-to-r from-[#ffaa40]/50 via-[#9c40ff]/50 to-[#ffaa40]/50 bg-size-[300%_100%] p-px"
+                                  )}
+                                  style={{
+                                    WebkitMask:
+                                      "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                                    WebkitMaskComposite: "destination-out",
+                                    mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                                    maskComposite: "subtract",
+                                    WebkitClipPath: "padding-box",
+                                  }}
+                                />
+                                <AnimatedGradientText className="text-xs">
+                                  {t('freelance-bagde')}
+                                </AnimatedGradientText>
+                              </div>
+                            ) : (
+                              <div className="group relative rounded-full px-2 shadow-[inset_0_-8px_10px_#8fdfff1f] transition-shadow duration-500 ease-out hover:shadow-[inset_0_-5px_10px_#8fdfff3f]">
+                                <span
+                                  className={cn(
+                                    "animate-gradient absolute inset-0 block h-full w-full rounded-[inherit]",
+                                    "bg-linear-to-r from-[#22d3ee]/50 via-[#2dd4bf]/50 to-[#22d3ee]/50 bg-size[300%_100%] p-px"
+                                  )}
+                                  style={{
+                                    WebkitMask:
+                                      "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                                    WebkitMaskComposite: "destination-out",
+                                    mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                                    maskComposite: "subtract",
+                                    WebkitClipPath: "padding-box",
+                                  }}
+                                />
+                                <span className="text-xs text-bright-snow-200">
+                                  {type === 'Project' ? t('project-badge') : t('university-badge')}
+                                </span>
+                              </div>
+                            )
+                          }
+                        </div>
+
+                        <p className="w-full text-start font-normal text-xs">
+                          {description}
+                        </p>
+
                       </div>
 
-
-                      <div className="w-full flex flex-row items-center justify-between">
-                        <h4 className="text-lg truncate">
-                          {name}
-                        </h4>
-
-                        {
-                          type === "Freelance" ? (
-                            <div className="group relative rounded-full px-2 shadow-[inset_0_-8px_10px_#8fdfff1f] transition-shadow duration-500 ease-out hover:shadow-[inset_0_-5px_10px_#8fdfff3f]">
-                              <span
-                                className={cn(
-                                  "animate-gradient absolute inset-0 block h-full w-full rounded-[inherit]",
-                                  "bg-linear-to-r from-[#ffaa40]/50 via-[#9c40ff]/50 to-[#ffaa40]/50 bg-size-[300%_100%] p-px"
-                                )}
-                                style={{
-                                  WebkitMask:
-                                    "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                                  WebkitMaskComposite: "destination-out",
-                                  mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                                  maskComposite: "subtract",
-                                  WebkitClipPath: "padding-box",
-                                }}
-                              />
-                              <AnimatedGradientText className="text-xs">
-                                {t('freelance-bagde')}
-                              </AnimatedGradientText>
-                            </div>
-                          ) : (
-                            <div className="group relative rounded-full px-2 shadow-[inset_0_-8px_10px_#8fdfff1f] transition-shadow duration-500 ease-out hover:shadow-[inset_0_-5px_10px_#8fdfff3f]">
-                              <span
-                                className={cn(
-                                  "animate-gradient absolute inset-0 block h-full w-full rounded-[inherit]",
-                                  "bg-linear-to-r from-[#22d3ee]/50 via-[#2dd4bf]/50 to-[#22d3ee]/50 bg-size[300%_100%] p-px"
-                                )}
-                                style={{
-                                  WebkitMask:
-                                    "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                                  WebkitMaskComposite: "destination-out",
-                                  mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                                  maskComposite: "subtract",
-                                  WebkitClipPath: "padding-box",
-                                }}
-                              />
-                              <span className="text-xs text-bright-snow-200">
-                                {type === 'Project' ? t('project-badge') : t('university-badge')}
-                              </span>
-                            </div>
-                          )
-                        }
+                      <div className="flex flex-row flex-wrap gap-x-2">
+                        {stack.map(technology => (
+                          <Badge
+                            key={name + technology}
+                            variant="outline"
+                            className="text-xs bg-transparent border-bright-snow-100 my-1"
+                          >
+                            {technology}
+                          </Badge>
+                        ))}
                       </div>
 
-                      <p className="w-full text-start font-normal text-xs">
-                        {description}
-                      </p>
-
-                    </div>
-
-                    <div className="flex flex-row flex-wrap gap-x-2">
-                      {stack.map(technology => (
-                        <Badge
-                          key={name + technology}
-                          variant="outline"
-                          className="text-xs bg-transparent border-bright-snow-100 my-1"
-                        >
-                          {technology}
-                        </Badge>
-                      ))}
-                    </div>
-
-                  </TranslucidButton>
-
+                    </TranslucidButton>
+                  </motion.div>
                 );
               })}
             </AnimatePresence>

@@ -7,7 +7,7 @@ import { ChevronsDown, Download, Languages, Play, Square, StepBack, StepForward,
 import { useIsMobile } from "#hooks/use-mobile";
 import profilePicture from '#assets/daniel.jpg';
 import { VE } from 'country-flag-icons/react/3x2'
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import {
   DropdownMenu,
@@ -91,6 +91,18 @@ export function Hero() {
 
   const isMobile = useIsMobile();
 
+  const [isCurtainOn, setCurtainStatus] = useState<boolean>(true);
+
+  useEffect(() => {
+    const timer1 = setTimeout(() => setCurtainStatus(!isMobile), 250);
+    const timer2 = setTimeout(() => setCurtainStatus(false), 2000);
+
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+    }
+  }, [isMobile]);
+
   const ref = useRef(null);
 
   const { scrollYProgress } = useScroll({
@@ -109,9 +121,15 @@ export function Hero() {
     <motion.div
       className="min-h-screen py-[5vh] relative flex flex-col w-full items-center justify-center gap-3"
       ref={ref}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       style={{ opacity, y }}
     >
-      <div className="absolute top-0 w-full px-10 md:px-25 lg:px-50 flex flex-row h-15 items-center justify-around pt-5">
+      <div
+        className={cn(
+          "absolute top-0 w-full px-10 md:px-25 lg:px-50 flex flex-row h-15 items-center justify-around pt-5",
+        )}
+      >
         <div className="flex-1 text-xl tracking-widest select-none">
           <span className="text-charcoal-blue-400">
             ~
@@ -127,7 +145,11 @@ export function Hero() {
         </div>
         <div className="flex-1 flex flex-row lg:gap-10 gap-5 justify-end items-center">
 
-          <div className="flex flex-row gap-3 items-center">
+          <div
+            className={cn(
+              "flex flex-row gap-3 items-center",
+            )}
+          >
             <DropdownMenu>
               <DropdownMenuTrigger render={
                 <IconButton>
@@ -182,7 +204,19 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="flex flex-row gap-3 items-center justify-center">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{
+          delay: 2.5,
+          duration: 0.5,
+          ease: 'easeInOut'
+        }}
+        className={cn(
+          "flex flex-row gap-3 items-center justify-center",
+          isCurtainOn && "hidden"
+        )}
+      >
         <TranslucidButton rotate className="p-0 rounded-full">
           <img
             className="h-20 w-20 object-cover"
@@ -203,7 +237,7 @@ export function Hero() {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       <div className="flex flex-col items-center justify-center">
         <JobTitleWord animationType="complex">
@@ -221,47 +255,77 @@ export function Hero() {
             {t('second-job-header')}
           </JobTitleWord>
 
-          <DropdownMenu>
-            <DropdownMenuTrigger render={
-              <TranslucidButton className="flex flex-row items-center justify-center gap-1 px-2 py-1 sm:px-3 sm:py-2">
-                <Download size={isMobile ? 14 : 16} className="shrink-0" />
-                <span className="leading-none sm:mb-[0.1rem] text-xs sm:text-base">
-                  {isMobile ? t('short-download-cv') : t('long-download-cv')}
-                </span>
-              </TranslucidButton>
-            } />
-            <DropdownMenuContent className="w-40" align="start">
-              <DropdownMenuGroup>
-                <DropdownMenuLabel>{t('available-languages')}</DropdownMenuLabel>
-                {Object.entries(availableLanguages).map(([code, { flag: Flag, nativeName, resumeFile, resumeName }]) => !resumeFile ? null : (
-                  <DropdownMenuItem key={code} className="cursor-pointer font-bold">
-                    <a key={code}
-                      className="flex flex-row items-center gap-2"
-                      href={resumeFile}
-                      download={`Daniel Ramírez - ${resumeName ?? `Resume ${code}`}.pdf`}
-                    >
-                      <Flag className="h-8! w-8! rounded-md overflow-hidden" />
-                      {nativeName}
-                    </a>
-                  </DropdownMenuItem>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{
+              delay: 2.5,
+              duration: 0.5,
+              ease: 'easeInOut'
+            }}
+          >
+            <DropdownMenu>
+              <DropdownMenuTrigger render={
+                <TranslucidButton
+                  resize={false}
+                  className={cn(
+                    "flex flex-row items-center justify-center gap-1 px-2 py-1 sm:px-3 sm:py-2",
+                    isCurtainOn && "invisible"
+                  )}
+                >
+                  <Download size={isMobile ? 14 : 16} className="shrink-0" />
+                  <span className="leading-none sm:mb-[0.1rem] text-xs sm:text-base">
+                    {isMobile ? t('short-download-cv') : t('long-download-cv')}
+                  </span>
+                </TranslucidButton>
+              } />
+              <DropdownMenuContent className="w-40" align="start">
+                <DropdownMenuGroup>
+                  <DropdownMenuLabel>{t('available-languages')}</DropdownMenuLabel>
+                  {Object.entries(availableLanguages).map(([code, { flag: Flag, nativeName, resumeFile, resumeName }]) => !resumeFile ? null : (
+                    <DropdownMenuItem key={code} className="cursor-pointer font-bold">
+                      <a key={code}
+                        className="flex flex-row items-center gap-2"
+                        href={resumeFile}
+                        download={`Daniel Ramírez - ${resumeName ?? `Resume ${code}`}.pdf`}
+                      >
+                        <Flag className="h-8! w-8! rounded-md overflow-hidden" />
+                        {nativeName}
+                      </a>
+                    </DropdownMenuItem>
 
-                ))}
-              </DropdownMenuGroup>
-            </DropdownMenuContent>
-          </DropdownMenu>
+                  ))}
+                </DropdownMenuGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+          </motion.div>
 
 
         </div>
 
       </div>
 
-      <div className="flex flex-row justify-center items-center gap-5">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{
+          delay: 2.5,
+          duration: 0.5,
+          ease: 'easeInOut'
+        }}
+
+        className={cn(
+          "flex flex-row justify-center items-center gap-5",
+          isCurtainOn && "invisible"
+        )}
+      >
         <TranslucidIconLink href="https://github.com/DanielRamirez404" target="_blank" rel="noreferrer" icon={faGithub} />
         <TranslucidIconLink href="https://www.linkedin.com/in/danielramirezabou/" target="_blank" rel="noreferrer" icon={faLinkedin} />
         <TranslucidIconLink href="https://wa.link/mbd8fh" target="_blank" rel="noreferrer" icon={faWhatsapp} />
         <TranslucidIconLink href="mailto:danielramirezabou@gmail.com" icon={faEnvelope} />
         {isMobile && (<TranslucidIconLink href="tel:+584224047404" icon={faPhone} />)}
-      </div>
+      </motion.div>
 
       <motion.div
         className="translate-y-10"
@@ -270,6 +334,7 @@ export function Hero() {
           y: [0, 0, -10, 40, 40]
         }}
         transition={{
+          delay: 3,
           duration: 3,
           repeat: Infinity,
           ease: 'easeInOut',
