@@ -7,8 +7,8 @@ export const english_translations = {
 
   "first-job-header": "SOFTWARE",
   "second-job-header": "ENGINEER",
-  "long-download-cv": "Download my CV!",
-  "short-download-cv": "Get my CV!",
+  "long-download-cv": "My Resume!",
+  "short-download-cv": "My Resume!",
   "available-languages": "Available Languages",
 
   // Technologies Section

@@ -9,7 +9,6 @@ import profilePicture from '#assets/daniel.jpg';
 import { VE } from 'country-flag-icons/react/3x2'
 import { useRef } from "react";
 
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -222,18 +221,35 @@ export function Hero() {
             {t('second-job-header')}
           </JobTitleWord>
 
-          <a
-            href={`${import.meta.env.BASE_URL}files/CV.pdf`}
-            download="Daniel-Ramírez-CV.pdf"
-            className="inline-block"
-          >
-            <TranslucidButton className="flex flex-row items-center justify-center gap-1 px-2 py-1 sm:px-3 sm:py-2">
-              <Download size={isMobile ? 14 : 16} className="shrink-0" />
-              <span className="leading-none sm:mb-[0.1rem] text-xs sm:text-base">
-                {isMobile ? t('short-download-cv') : t('long-download-cv')}
-              </span>
-            </TranslucidButton>
-          </a>
+          <DropdownMenu>
+            <DropdownMenuTrigger render={
+              <TranslucidButton className="flex flex-row items-center justify-center gap-1 px-2 py-1 sm:px-3 sm:py-2">
+                <Download size={isMobile ? 14 : 16} className="shrink-0" />
+                <span className="leading-none sm:mb-[0.1rem] text-xs sm:text-base">
+                  {isMobile ? t('short-download-cv') : t('long-download-cv')}
+                </span>
+              </TranslucidButton>
+            } />
+            <DropdownMenuContent className="w-40" align="start">
+              <DropdownMenuGroup>
+                <DropdownMenuLabel>{t('available-languages')}</DropdownMenuLabel>
+                {Object.entries(availableLanguages).map(([code, { flag: Flag, nativeName, resumeFile, resumeName }]) => !resumeFile ? null : (
+                  <DropdownMenuItem key={code} className="cursor-pointer font-bold">
+                    <a key={code}
+                      className="flex flex-row items-center gap-2"
+                      href={resumeFile}
+                      download={`Daniel Ramírez - ${resumeName ?? `Resume ${code}`}.pdf`}
+                    >
+                      <Flag className="h-8! w-8! rounded-md overflow-hidden" />
+                      {nativeName}
+                    </a>
+                  </DropdownMenuItem>
+
+                ))}
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
 
         </div>
 
