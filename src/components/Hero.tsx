@@ -119,7 +119,7 @@ export function Hero() {
 
   return (
     <motion.header
-      className="min-h-screen py-[5vh] relative flex flex-col w-full items-center justify-center gap-3"
+      className="min-h-screen py-[0.15vh] relative flex flex-col w-full items-center justify-center gap-3"
       ref={ref}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}

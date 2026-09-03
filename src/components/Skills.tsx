@@ -73,12 +73,8 @@ function TechnologiesSection() {
     'programming-languages',
     'frontend',
     'backend',
-    'databases',
-    'mobile',
-    'low-level',
     'devops',
     'ides',
-    'non-coding',
   ] as const);
 
   type TechnologyTypes = typeof allTypes[number];
@@ -95,23 +91,17 @@ function TechnologiesSection() {
     'programming-languages': t('programming-languages-caption'),
     'frontend': t('frontend-caption'),
     'backend': t('backend-caption'),
-    'databases': t('databases-caption'),
-    'low-level': t('low-level-caption'),
-    'mobile': t('mobile-caption'),
     'devops': t('devops-caption'),
     'ides': t('ides-caption'),
-    'non-coding': t('non-coding-caption'),
   };
 
   const techSections: TechnologiesPerType = {
 
     'programming-languages': [
       { name: 'C++', icon: cppIcon },
-      { name: 'JavaScript', icon: jsIcon },
       { name: 'TypeScript', icon: tsIcon },
       { name: 'Python', icon: pythonIcon },
       { name: 'Kotlin', icon: kotlinIcon },
-      { name: 'PHP', icon: phpIcon },
     ],
 
     'frontend': [
@@ -119,61 +109,31 @@ function TechnologiesSection() {
       { name: 'Vite', icon: viteIcon },
       { name: 'React', icon: reactIcon },
       { name: 'Vue', icon: vueIcon },
-      { name: 'HTML', icon: htmlIcon },
-      { name: 'CSS', icon: cssIcon },
       { name: 'Tailwind', icon: tailwindIcon },
-      { name: 'Bootstrap', icon: bootstrapIcon },
       { name: 'Motion', icon: motionIcon },
-      { name: 'TanStack Query', icon: tanstackQueryIcon },
-      { name: 'Zod', icon: zodIcon },
-      { name: 'Shadcn', icon: shadcnIcon },
     ],
 
     'backend': [
       { name: 'Express', icon: expressIcon },
       { name: 'Next.js', icon: nextjsIcon },
-      { name: 'Postman', icon: postmanIcon },
-    ],
-
-    'databases': [
       { name: 'PostgreSQL', icon: postgresqlIcon },
       { name: 'MariaDB', icon: mariadbIcon },
-      { name: 'MySQL', icon: mysqlIcon },
       { name: 'SQLite', icon: sqliteIcon },
-    ],
-
-    'low-level': [
-      { name: 'SDL', icon: sdlIcon },
-      { name: 'Boost.Asio', icon: boostAsioIcon },
-    ],
-
-    'mobile': [
-      { name: 'Jetpack Compose', icon: jetpackComposeIcon },
     ],
 
     'devops': [
       { name: 'Git', icon: gitIcon },
       { name: 'GitHub', icon: githubIcon },
-      { name: 'GitHub Actions', icon: githubActionsIcon },
       { name: 'Docker', icon: dockerIcon },
-      { name: 'Linux', icon: linuxIcon },
       { name: 'Bash', icon: bashIcon },
-      { name: 'Zsh', icon: zshIcon },
       { name: 'CMake', icon: cmakeIcon },
     ],
 
     'ides': [
       { name: 'Neovim', icon: neovimIcon },
-      { name: 'Vim', icon: vimIcon },
-      { name: 'Visual Studio Code', icon: vsCodeIcon },
-      { name: 'Visual Studio', icon: visualStudioIcon },
+      { name: 'VS Code', icon: vsCodeIcon },
       { name: 'Android Studio', icon: androidStudioIcon },
     ],
-
-    'non-coding': [
-      { name: 'Figma', icon: figmaIcon },
-      { name: 'Jira', icon: jiraIcon },
-    ]
   };
 
   const allTechnologies: Technology[] = Array.from(
@@ -186,7 +146,7 @@ function TechnologiesSection() {
 
   const areAllChosen = techType === 'all';
 
-  const chosenTechnologies = areAllChosen ? allTechnologies : techSections[techType];
+  const chosenTechnologies = areAllChosen ? [...allTechnologies] : techSections[techType];
 
   return (
     <>
@@ -214,38 +174,52 @@ function TechnologiesSection() {
         ))}
       </div>
       <div className="flex flex-col gap-5">
-        <p className="text-xs sm:text-sm md:text-base text-start sm:text-center font-semibold opacity-85 hover:opacity-100 transition-opacity duration-300">
+        <p className="text-sm sm:text-sm md:text-base text-start sm:text-center font-semibold opacity-85 hover:opacity-100 transition-opacity duration-300">
           {captions[techType as TechnologyTypes | 'all']}
         </p>
         <div className={cn("w-full flex flex-wrap justify-center items-center gap-5")}>
-          {chosenTechnologies.map(({ name, icon }) => {
+          {chosenTechnologies.map(({ name, icon }, i) => {
 
             const isActive = selecteds.includes(name);
 
             return (
-              <TranslucidButton
-                key={name}
-                className={cn(
-                  "whitespace-nowrap min-w-35 flex flex-row items-center gap-3 justify-start",
-                  areAllChosen && "min-w-10",
-                )}
-                active={isActive}
-                onHoverStart={() => setSelecteds(prev => [...prev, name])}
-                onHoverEnd={() => setTimeout(() => setSelecteds(prev => prev.filter(tech => tech !== name)), 200)}
+              <motion.div
+                key={`${techType}-${name}`}
+                initial={{ opacity: 0, y: "15%" }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  delay: (i + 1) * (areAllChosen ? 0.10 : 0.25)
+                }}
               >
-                <img
+                <TranslucidButton
                   className={cn(
-                    "h-5 w-5 object-contain transition-all duration-200",
-                    isActive
-                      ? "grayscale-0 opacity-100"
-                      : "grayscale opacity-50"
+                    "whitespace-nowrap min-w-28 p-3 flex flex-col items-center gap-1.5 justify-start",
+                    areAllChosen && "min-w-10",
                   )}
-                  src={icon}
-                  fetchPriority="auto"
-                  alt={`${name}-icon`}
-                />
-                {!areAllChosen && name}
-              </TranslucidButton>
+                  active={isActive}
+                  onHoverStart={() => setSelecteds(prev => [...prev, name])}
+                  onHoverEnd={() => setTimeout(() => setSelecteds(prev => prev.filter(tech => tech !== name)), 200)}
+                  onClick={() => {
+                    setSelecteds(prev => [...prev, name]);
+                    setTimeout(() => setSelecteds(prev => prev.filter(tech => tech !== name)), 1000)
+                  }}
+                >
+                  <img
+                    className={cn(
+                      "h-7 w-7 object-contain transition-all duration-200",
+                      areAllChosen && "h-5! w-5!",
+                      isActive
+                        ? "grayscale-0 opacity-100"
+                        : "grayscale opacity-50"
+                    )}
+                    src={icon}
+                    fetchPriority="auto"
+                    alt={`${name}-icon`}
+                  />
+                  {!areAllChosen && <span className="text-sm font-normal">{name}</span>}
+                </TranslucidButton>
+
+              </motion.div>
             );
           })}
         </div>
@@ -432,7 +406,7 @@ export function Skills() {
   return (
     <div
       ref={containerRef}
-      className="min-h-screen py-[5vh] relative flex flex-col w-screen items-center pt-[10vh]"
+      className="min-h-screen py-[0.15vh] relative flex flex-col w-screen items-center pt-[10vh]"
     >
       <motion.div
         className="w-[90%] flex flex-col items-center justify-center max-w-200 gap-3 px-5"

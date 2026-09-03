@@ -18,42 +18,26 @@ export const english_translations = {
   "programming-languages": "Languages",
   frontend: "Frontend",
   backend: "Backend",
-  databases: "Databases",
-  "low-level": "Low Level",
-  mobile: "Mobile",
   devops: "DevOps",
   ides: "IDEs",
-  "non-coding": "Non-coding",
 
   "all-caption":
-    "As a dev coding since 2022, with some freelancing experience, I've worked with a bunch of technologies. These are the ones I feel the most comfortable with. I do mostly Web Dev and low-level side projects. Feel free to check the other tabs to read my opinions on each field!",
+    "I've worked with a bunch of technologies, but these are the ones I feel the most comfortable with. I do mostly Web Dev and Low-Level side projects",
 
   "programming-languages-caption":
-    "These are the languages I feel the most comfortable with. My native (programming) language is C++, so learning others has been a breeze. I'm eager to learn Rust and Go. I tend to lean to JS/TS and python solutions on real projects",
+    "These are the ones I've used the most. My native language is C++, so learning others has been a breeze. I tend to lean to JS/TS and Python solutions on real projects",
 
   "frontend-caption":
-    "It's probably the field I've worked the most with. I like building intuitive and appealing UIs so that the user has a seamless experience. I also value reusability and a fast dev experience, hence I like technologies like next, tailwind and useQuery that do the heavy lifting",
+    "Probably the field I've worked the most with. I like building intuitive and appealing UIs so that the UX is seamless. I also value reusability and a fast dev experience",
 
   "backend-caption":
-    "I like using JS/TS on the backend to boost consistency with the frontend. But of course, the right tech stack should depend on the job's nature, like Go for speed-sensitive needs (which I've dabbled with in a teammate's codebase). I'd love to try Django, FastAPI and Nest.js",
-
-  "databases-caption":
-    "I've ended up working with different relational DBMSs. I like writing SQL queries myself, so I haven't worked with many ORMs. I'd like to test both redis and mongodb soon since I believe they'd be both fantastic tools to have in my repertoire",
-
-  "low-level-caption":
-    "I love this stuff, because it's not used for your average CRUD application. I've used these with computer graphics and networking with sockets. Low-level apps usually require better grasp of DSA concepts too",
-
-  "mobile-caption":
-    "I love Android Studio. I've had a great development experience with it and Jetpack Compose for the UI. Mobile development is one of my favorite fields, at least when it comes down to how fun it is! I also want to give react native a try",
+    "I like using JS/TS on the backend to be consistent with the frontend. But of course, the right tech stack should depend on the job's nature",
 
   "devops-caption":
-    "These might feel like miscellaneous tools, but bear with me! CI/CD is really a game-changer! especially in real-life projects. I'm also used to using linux since I use arch, btw, and the development experience has been wonderful!",
+    "These might feel like miscellaneous tools, but bear with me! CI/CD is really a game-changer! especially in real-life projects. I'm also used to linux since I use arch, btw",
 
   "ides-caption":
-    "Nowadays, I just stick to Neovim, since I've customized it and feel really comfortable and in control. I also love vim motions, it used to feel so weird at first, but it's really cool once you get the hang of it!",
-
-  "non-coding-caption":
-    "Well, these are the actual miscellaneous tools. Basically technologies which I think are worth mentioning but don't deserve a whole tab per category. I like using Figma for UI drafts and Jira for kanban boards",
+    "Nowadays, I just stick to Neovim, since I've customized it and feel really comfortable and in control. I also love vim motions, it's really cool once you get the hang of it!",
 
   // Spoken Languages Section
 
@@ -122,32 +106,20 @@ export const spanish_translations = {
   "programming-languages": "Lenguajes",
   frontend: "Frontend",
   backend: "Backend",
-  databases: "Bases de Datos",
-  "low-level": "Bajo Nivel",
-  mobile: "Móvil",
   devops: "DevOps",
   ides: "IDEs",
-  "non-coding": "Otras",
 
-  "all-caption": "Como programo desde 2022 y tengo algo de experiencia freelance, he trabajado com muchas tecnologías. Estas son aquellas con las que me siento más cómodo. Suelo hacer desarrollo web y proyectos personales de bajo nivel",
+  "all-caption": "He trabajado con muchas tecnologías. Estas son aquellas con las que me siento más cómodo. Suelo hacer desarrollo web y proyectos personales de bajo nivel",
 
-  "programming-languages-caption": "Estos son los lenguajes de programación con los que mejor me llevo. Mi lenguaje nativo es C++, por lo que aprender otros ha sido pan comido. Suelo escoger JS/TS y Python para soluciones reales",
+  "programming-languages-caption": "Estos son aquellos con los que mejor me llevo. Mi lenguaje nativo es C++, así que aprender otros ha sido pan comido. Suelo usar JS/TS y Python en soluciones reales",
 
-  "frontend-caption": "Probablemente donde más he trabajado. Me gusta concebir interfaces intuitivas y llamativas para mejorar la experiencia de usuario. También valoro la reusabilidad y rápida experiencia de desarrollo, por lo que me gustan tecnologías como next y tailwind",
+  "frontend-caption": "Donde más he trabajado. Me gusta concebir UIs intuitivas y llamativas para mejorar la UX. También valoro la reusabilidad y rápida experiencia de desarrollo",
 
-  "backend-caption": "Me gusta usar JS/TS en el back para facilitar la coordinación con el frontend. Pero, al final del día, el stack debe depender de los requerimientos de la aplicación, como Go en proyectos que pidan alta velocidad (que he podido ver en el código fuente de un equipo con el que trabajé)",
+  "backend-caption": "Me gusta usar JS/TS en el back para ser consistente con el frontend. Pero, al final del día, el stack debe depender de los requerimientos de la aplicación",
 
-  "databases-caption": "He trabajado con distintos gestores relacionales. Me gusta escribir las queries por mi cuenta, por lo que no he trabajao con tantos ORMs. Me gustaría probar mongodb y redis",
+  "devops-caption": "Pueden parecer misceláneas, ¡pero CI/CD es superimportante en producción! También estoy acostumbrado a linux porque uso Arch, btw",
 
-  "low-level-caption": "Me encanata esta área porque requiere más complejidad que un simple CRUD. Suelen pedir mejor comprensión de estructuras de datos y algoritmos. He trabajado con computación gráfica y networking con sockets",
-
-  "mobile-caption": "Me gusta Android Studio porque he tenido una gran experiencia con él y Jetpack Compose para la interfaz gráfica. ¡El desarrollo móvil es definitivamente una de las áreas que más me llenan!",
-
-  "devops-caption": "Pueden parecer misceláneas, ¡pero CI/CD es superimportante en producción! También estoy acostumbrado a linux porque uso Arch, btw, ¡y la experiencia me ha sido encantadora!",
-
-  "ides-caption": "Hoy día, uso Neovim, ya que lo he personalizado mucho y me siento bastante en control. Me encantan las vim motions. Una vez te acostumbras, ¡No hay vuelta atrás!",
-
-  "non-coding-caption": "Básicamente herramientas misceláneas que no tienen que ver directamante con código, pero que son de bastante utilidad en la industria",
+  "ides-caption": "Hoy día, uso Neovim, ya que lo he personalizado mucho y me siento bastante en control. Una vez te acostumbras a las vim motions, ¡No hay vuelta atrás!",
 
   // Spoken Languages Section
 
@@ -167,7 +139,7 @@ export const spanish_translations = {
   "french-caption": "¡Mi favorito! Ha sido fácil para mí, además de que me encanta la música y YouTube francófono",
   "german-caption": "No es tan complicado como pensaba. Soy mucho mejor escuchando y leyendo que hablando, ¡pero sigo aprendiendo!",
   "portuguese-caption": "Me encanta su fonética. Como hispano, me ha sido sencillo, pero sigue siendo su propia lengua",
-  "japanese-caption": "Ando oxidado, ¡pero lo adoro!. No practico suficiente porque estoy enfocado en otros idiomas",
+  "japanese-caption": "Ando oxidado, ¡pero lo adoro! No practico suficiente porque estoy enfocado en otros idiomas",
   
   // Projects Section
 

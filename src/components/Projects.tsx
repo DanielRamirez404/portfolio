@@ -140,7 +140,7 @@ export function Projects() {
   const lenis = useLenis();
 
   return (
-    <div ref={containerRef} className="min-h-screen py-[5vh] relative flex flex-col w-screen items-center gap-3">
+    <div ref={containerRef} className="min-h-screen py-[0.15vh] relative flex flex-col w-screen items-center gap-3">
       <motion.div style={{ opacity, y }} className="w-full flex flex-col items-center justify-center gap-8">
 
         <Dialog open={isVideoPlayerOpen} onOpenChange={setVideoPlayerOpenStatus}>
